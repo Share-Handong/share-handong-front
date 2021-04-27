@@ -6,7 +6,7 @@ export default function Main() {
       <Head>
         <title>Home | shareHandong</title>
       </Head>
-      <h1>Share-handong-front-Main</h1>
+      <h1>메인</h1>
     </div>
   );
 }
