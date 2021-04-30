@@ -1,3 +1,4 @@
+import "semantic-ui-css/semantic.min.css";
 
 export default function ShareForm() {
   const createPost = async event => {
@@ -18,19 +19,35 @@ export default function ShareForm() {
     ).then((res) => res.json());
   }
     return( 
-    <article>
-      <div>
-    <h2>Create</h2>
-    <form action="/create_process" method="post" onSubmit={createPost}
-    >
+    <article style={{
+      // width: "91.6%",
+      margin: "0px",
+      paddingTop : "50px",
+      paddingLeft:"60px",
+      paddingRight:"60px",
+    }}>
+     <div  style={{
+              backgroundColor : "white",
+              height: "1525px",
+              margin: "0px",
+              paddingTop : "250px",
+              paddingLeft:"65px",
+              paddingRight:"65px",
+              zIndex:1,
+            }} >
+ <form action="/create_process" method="post" onSubmit={createPost}>
       <p><input id = "title" name="title" type="text"></input></p>
       <p>
-        <textarea id = "desc" name="desc" type="text"></textarea>
+        <textarea id = "desc" name="desc" type="text"  ></textarea>
       </p>
       <p>
         <button type="submit" >제출</button>
       </p>
     </form>
-    </div>
-</article>);
+   
+</div>
+</article>
+
+);
+
 ``}
