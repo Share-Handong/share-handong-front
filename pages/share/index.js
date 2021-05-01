@@ -48,6 +48,19 @@ export default function ShareForm() {
             }} >
    
  <form action="/create_process" method="post" onSubmit={createPost}>
+   <div class= "post_top" style={{
+           display: "inline-flex"
+            }}>
+     <div class = "post_img">
+ <img className="product" src="/images/product_image.png" alt="logo" style={{
+              backgroundColor : "white",
+              height: "416px",
+              width: "404px",
+              boxShadow : "1px 1px 2px grey",
+              border : "1px solid DCDCDC"
+              
+            }} /></div>
+<div class = "post_info">
  <select id="category" onChange={handleChange} value={category}>
       <option selected value = "1">나눔받기</option>
       <option value = "2">나눔하기</option>
@@ -61,19 +74,31 @@ export default function ShareForm() {
               // marginRight: "88px",
               zIndex:1,
             }}></input></p>
+        <div class = "writer-info">
+        <img className="icon" src="/images/profile_image.png" alt="logo" />
+        <span>김민지</span>
+        <span>2021.4.21</span>
+            </div>
+            <div class = "button">
+            <button type="submit" >삭제하기</button>
+            <button type="submit" >수정하기</button>
+            </div>
+            </div>
+            </div>
       <Divider />
-      <p>
+      <div class = "section-title">
+      <img className="icon" src="/images/outline_description_black_24dp.png" alt="logo" />
+        <span>정보</span>
+      </div>
         <textarea id = "desc" name="desc" type="text" style={{
               backgroundColor : "white",
               height: "482px",
               width: "1128px",
               zIndex:1,
             }} ></textarea>
-      </p>
-      
-      <p>
+       <div class ="section-bottom">
         <button type="submit" >제출</button>
-      </p>
+        </div>
     </form>
 </div>
 </article>
