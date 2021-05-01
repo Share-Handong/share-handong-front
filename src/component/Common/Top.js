@@ -1,4 +1,12 @@
 import { Icon, Input } from "semantic-ui-react";
+import css from "styled-jsx/css";
+
+const style = css`
+  .top-wrap {
+    background-color: white;
+    height: 60px;
+  }
+`;
 
 export default function Top() {
   return (
@@ -44,10 +52,6 @@ export default function Top() {
         </div>
       </div>
       <style jsx>{`
-        .top-wrap {
-          background-color: white;
-          height: 60px;
-        }
         .sub {
           height: 60px;
           width: 70%;
@@ -61,6 +65,7 @@ export default function Top() {
           margin: 13px;
         }
       `}</style>
+      <style jsx>{style}</style>
     </>
   );
 }

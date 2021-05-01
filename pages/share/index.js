@@ -1,8 +1,5 @@
 import "semantic-ui-css/semantic.min.css";
 import { Divider } from "semantic-ui-react";
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
 import React, { useEffect, useState } from "react";
 
 export default function ShareForm() {
