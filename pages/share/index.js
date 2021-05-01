@@ -3,8 +3,8 @@ import { Divider } from "semantic-ui-react";
 import React, { useEffect, useState } from "react";
 
 export default function ShareForm() {
-  const [category, setCategory] = useState('');
- 
+  const [category, setCategory] = useState("1");
+
   const handleChange = async event => {
     event.preventDefault();
     setCategory(event.target.value);
@@ -19,7 +19,7 @@ export default function ShareForm() {
         body: JSON.stringify({
           title: event.target.title.value,
           desc : event.target.desc.value,
-          category: category,
+          category: Number(category),
         }),
         headers: {
           'Content-Type': 'application/json'
@@ -28,8 +28,6 @@ export default function ShareForm() {
       }
     ).then((res) => res.json());
   }
-
- 
 
     return( 
     <article style={{
@@ -51,8 +49,8 @@ export default function ShareForm() {
    
  <form action="/create_process" method="post" onSubmit={createPost}>
  <select id="category" onChange={handleChange} value={category}>
-      <option selected value = "나눔받기">나눔받기</option>
-      <option value = "나눔하기">나눔하기</option>
+      <option selected value = "1">나눔받기</option>
+      <option value = "2">나눔하기</option>
     </select>
       <p><input id = "title" name="title" type="text" style={{
               backgroundColor : "white",
