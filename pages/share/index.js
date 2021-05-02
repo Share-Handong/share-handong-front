@@ -42,7 +42,7 @@ export default function ShareForm() {
               backgroundColor : "white",
               height: "1525px",
               margin: "0px",
-              paddingTop : "250px",
+              paddingTop : "85px",
               paddingLeft:"65px",
               paddingRight:"65px",
               zIndex:1,
@@ -95,9 +95,16 @@ export default function ShareForm() {
               zIndex:1,
             }}></input></p>
         <div class = "writer-info">
-        <img className="icon" src="/images/profile_image.png" alt="logo" />
-        <span>김민지</span>
-        <span>2021.4.21</span>
+        <img className="icon" src="/images/profile_image.png" alt="logo" style={{
+             borderRadius: "50%",
+            }}/>
+        <span style={{
+            fontSize : "25px"
+            }}> 김민지</span>
+        <span style={{
+            fontSize : "25px",
+            color: "#727272",
+            }} >2021.4.21</span>
             </div>
             </div>
             </div>
