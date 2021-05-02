@@ -1,6 +1,7 @@
 import "semantic-ui-css/semantic.min.css";
 import { Divider } from "semantic-ui-react";
 import React, { useEffect, useState } from "react";
+import Link from 'next/link'
 
 export default function ShareForm() {
   const [category, setCategory] = useState("1");
@@ -61,10 +62,29 @@ export default function ShareForm() {
               
             }} /></div>
 <div class = "post_info">
- <select id="category" onChange={handleChange} value={category}>
+ <div class = "selection-wrap" style={{
+              background:"url('/images/selection_arrow.png') no-repeat 97% 50%/25px auto",
+              border : "1px solid #606060",
+              borderRadius : "10px",
+              width : "180px",
+              height : "52px",
+            }}>
+ <select id="category" onChange={handleChange} value={category} 
+            style={{
+              width : "180px",
+              height : "52px",
+              background:"transparent",
+              border : "none",
+              fontSize : "23px",
+              color: "#F85757",
+              borderRadius : "10px",
+              textAlign: "center",
+              appearance:"none",
+              boxSizing : "border-box"
+            }}>
       <option selected value = "1">나눔받기</option>
       <option value = "2">나눔하기</option>
-    </select>
+    </select></div>
       <p><input id = "title" name="title" type="text" style={{
               backgroundColor : "white",
               height: "92px",
@@ -92,15 +112,16 @@ export default function ShareForm() {
               width: "1128px",
               zIndex:1,
             }} ></textarea>
-       <div class ="section-bottom">
-       <button class = "cancel-button" style={{
+       <div class ="section-bottom" style={{
+           display: "inline-flex"
+            }}>
+       <Link href = '/' class = "cancel-button" ><div style={{
               backgroundColor : "white",
               border : "none",
-              height: "63px",
-              width: "273px",
               fontSize : "26px",
-              color: "black"
-            }} >취소하기</button>
+              color: "black",
+              textDecoration : "underline",
+            }} >취소하기</div></Link>
         <button class = "submit-button" type="submit" style={{
               backgroundColor : "#F85757",
               borderRadius : "25px",
