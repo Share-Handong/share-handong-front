@@ -79,10 +79,6 @@ export default function ShareForm() {
         <span>김민지</span>
         <span>2021.4.21</span>
             </div>
-            <div class = "button">
-            <button type="submit" >삭제하기</button>
-            <button type="submit" >수정하기</button>
-            </div>
             </div>
             </div>
       <Divider />
@@ -97,7 +93,22 @@ export default function ShareForm() {
               zIndex:1,
             }} ></textarea>
        <div class ="section-bottom">
-        <button type="submit" >제출</button>
+       <button class = "cancel-button" style={{
+              backgroundColor : "white",
+              border : "none",
+              height: "63px",
+              width: "273px",
+              fontSize : "26px",
+              color: "black"
+            }} >취소하기</button>
+        <button class = "submit-button" type="submit" style={{
+              backgroundColor : "#F85757",
+              borderRadius : "25px",
+              height: "63px",
+              width: "273px",
+              fontSize : "26px",
+              color: "white"
+            }} >글 등록하기</button>
         </div>
     </form>
 </div>
