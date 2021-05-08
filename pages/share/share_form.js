@@ -3,7 +3,7 @@ import { Divider } from "semantic-ui-react";
 import React, { useEffect, useState } from "react";
 import Link from 'next/link'
 import DescriptionIcon from '@material-ui/icons/Description';
-
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 // import css from "styled-jsx/css";
 
 
@@ -62,13 +62,14 @@ export default function ShareForm() {
   boxShadow : "1px 1px 2px grey",
   border : "1px solid DCDCDC"}}/>
             </div>
-<div class = "wrapper">
+<div class = "wrapper"  style = {{paddingLeft : "80px"}}>
  <div class = "category-form" style = {{
    background:"url('/images/selection_arrow.png') no-repeat 97% 50%/25px auto",
    border : "1px solid #606060",
    borderRadius : "10px",
    width : "180px",
    height : "52px",
+   marginBottom : "20px"
  }}>
  <select id="category" onChange={handleChange} value={category} 
             style={{
@@ -81,7 +82,8 @@ export default function ShareForm() {
               borderRadius : "10px",
               textAlign: "center",
               appearance:"none",
-              boxSizing : "border-box"
+              boxSizing : "border-box",
+              paddingLeft : "28px"
             }}>
       <option selected value = "1">나눔받기</option>
       <option value = "2">나눔하기</option>
@@ -93,10 +95,12 @@ export default function ShareForm() {
   fontSize : "45px",
   zIndex:1,
   }}></input></p>
-        <div class = "wrapper">
-        <img className="profile-img" style ={{borderRadius: "50%"}} src="/images/profile_image.png" alt="logo"/>
+      <div class = "wrapper" style = {{paddingTop : "40px", display : "inline-flex" , flexDirection : "row", alignItems: "center"}}>
+        <img className="profile-img" style ={{borderRadius: "50%",            
+        marginRight: "18px"}} src="/images/profile_image.png" alt="logo"/>
         <span className ="profile-name" style={{
-            fontSize : "25px"
+            fontSize : "25px",
+            paddingRight: "36px"
             }}> 김민지</span>
         <span className ="post-date" style={{
             fontSize : "25px",
@@ -107,9 +111,9 @@ export default function ShareForm() {
             </div>
       <Divider />
       <div class = "section-main">
-      <div class = "wrapper">
-      <DescriptionIcon/>        
-        <span style = {{ fontSize : "35px", fontWeight : "bold" }}>정보</span>
+      <div class = "wrapper" style ={{marginTop : "60px" , paddingBottom : "34px", }}>
+      <DescriptionIcon style={{ fontSize: 35 }}/>        
+      <span style = {{ fontSize : "35px", fontWeight : "bold", paddingLeft: "8px" ,color : "#1A1818"}}>정보</span>
       </div>
         <textarea id = "desc-form" name="desc" type="text" style ={{
            backgroundColor : "white",
@@ -119,7 +123,12 @@ export default function ShareForm() {
   }}></textarea>
         </div>
         <div class ="section-bottom" style={{
-           display: "inline-flex"
+          width : "1128px",
+           display: "inline-flex",
+           flexFlow : "row",
+           justifyContent : "flex-end",
+           alignItems : "center",
+           marginTop : "56px"
             }}>
        <Link href = '/' class = "cancel-btn" >
           <div style= {{ 
@@ -128,6 +137,7 @@ export default function ShareForm() {
         fontSize : "35px",
         color: "#7E7979",
         textDecoration : "underline",
+        paddingRight : "48px"
         }}>취소하기</div></Link>
        <button class = "submit-btn" type="submit" style = {{
              backgroundColor : "#F85757",
@@ -141,9 +151,6 @@ export default function ShareForm() {
        }}>글 등록하기</button>
         </div>
     </form>
-    {/* <style global jsx>{imgStyle}</style>
-    <style global jsx>{formStyle}</style>
-    <style global jsx>{btnStyle}</style> */}
 </div>
 </article>
 );
