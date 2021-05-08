@@ -1,97 +1,48 @@
-import "semantic-ui-css/semantic.min.css";
-import { Divider } from "semantic-ui-react";
-import React, { useEffect, useState } from "react";
 import Link from 'next/link'
-import css from "styled-jsx/css";
+import "semantic-ui-css/semantic.min.css";
+import { Divider, Placeholder } from "semantic-ui-react";
+import ReplyIcon from '@material-ui/icons/Reply';
+import CreateIcon from '@material-ui/icons/Create';
+import DescriptionIcon from '@material-ui/icons/Description';
 
-
-export default function ShareForm() {
-  const [category, setCategory] = useState("1");
-
-  const handleChange = async event => {
-    event.preventDefault();
-    setCategory(event.target.value);
-  }
-  
-  const createPost = async event => {
-    event.preventDefault()
-
-    const res = await fetch(
-      'http://localhost:3000/api/register',
-      {
-        body: JSON.stringify({
-          title: event.target.title.value,
-          desc : event.target.desc.value,
-          category: Number(category),
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        method: 'POST'
-      }
-    ).then((res) => res.json());
-  }
-
+export default function Share() {
     return( 
-    <article style={{
-      margin: "0px",
-      paddingTop : "50px",
-      paddingLeft:"60px",
-      paddingRight:"60px",
-    }}>
-     <div  style={{
-              backgroundColor : "white",
-              height: "1525px",
-              margin: "0px",
-              paddingTop : "85px",
-              paddingLeft:"65px",
-              paddingRight:"65px",
-              zIndex:1,
-            }} >
-   
- <form action="/create_process" method="post" onSubmit={createPost}>
-   <div class= "section-top" style={{
+        <article style={{
+            margin: "0px",
+            paddingTop : "50px",
+            paddingLeft:"60px",
+            paddingRight:"60px",
+          }}>
+           <div  style={{
+                    backgroundColor : "white",
+                    height: "1525px",
+                    margin: "0px",
+                    paddingTop : "85px",
+                    paddingLeft:"65px",
+                    paddingRight:"65px",
+                    zIndex:1,
+                  }} >
+        <div class= "section-top" style={{
            display: "inline-flex"
             }}>
-     <div class = "wrapper">
-        <img className="img-form" src="/images/product_image.png" alt="logo" style= {{ backgroundColor : "white",
-  height: "416px",
-  width: "404px",
-  boxShadow : "1px 1px 2px grey",
-  border : "1px solid DCDCDC"}}/>
-            </div>
-<div class = "wrapper">
- <div class = "category-form" style = {{
-   background:"url('/images/selection_arrow.png') no-repeat 97% 50%/25px auto",
-   border : "1px solid #606060",
-   borderRadius : "10px",
-   width : "180px",
-   height : "52px",
- }}>
- <select id="category" onChange={handleChange} value={category} 
-            style={{
-              width : "180px",
-              height : "52px",
-              background:"transparent",
-              border : "none",
-              fontSize : "23px",
-              color: "#F85757",
-              borderRadius : "10px",
-              textAlign: "center",
-              appearance:"none",
-              boxSizing : "border-box"
-            }}>
-      <option selected value = "1">나눔받기</option>
-      <option value = "2">나눔하기</option>
-    </select></div>
-      <p><input id = "title-form" name="title" type="text" style = {{  backgroundColor : "white",
-  height: "92px",
-  width: "644px",
-  fontSize : "45px",
-  zIndex:1,
-  }}></input></p>
         <div class = "wrapper">
-        <img className="profile-img" src="/images/profile_image.png" alt="logo"/>
+        <img className="img-form" src="/images/product_image.png" alt="logo" style= {{ backgroundColor : "white",
+            height: "416px",
+            width: "404px",
+            boxShadow : "1px 1px 2px grey",
+            border : "1px solid DCDCDC"}}/>
+        </div>   
+        <div class = "wrapper">
+ <div class = "category" style = {{
+  fontSize : "23px",
+  fontWeight: "bold",
+  color : "#F85757",
+ }}>나눔받기</div>
+ <div class = "title " style = {{fontSize : "45px"}}> 
+ <p>무거운 가방 옮겨주실 분 찾아요</p>
+ </div>
+ <div class = "wrapper">
+        <img className="profile-img" style ={{borderRadius: "50%"}} src="/images/profile_image.png" alt="logo"/>
         <span className ="profile-name" style={{
             fontSize : "25px"
             }}> 김민지</span>
@@ -100,103 +51,102 @@ export default function ShareForm() {
             color: "#727272",
             }} >2021.4.21</span>
             </div>
-            </div>
-            </div>
-      <Divider />
-      <div class = "section-main">
-      <div class = "wrapper">
-      <img className="icon" src="/images/outline_description_black_24dp.png" alt="logo" style = {{ width : "35px", height : "35px"}}/>
-        <span style = {{ fontSize : "35px", fontWeight : "bold" }}>정보</span>
-      </div>
-        <textarea id = "desc-form" name="desc" type="text" style ={{
-           backgroundColor : "white",
-  height: "482px",
-  width: "1128px",
-  zIndex:1,
-  }}></textarea>
-        </div>
-        <div class ="section-bottom" style={{
-           display: "inline-flex"
-            }}>
-       <Link href = '/' class = "btnStyle.cancel-btn" >
-          <div style= {{ 
-         backgroundColor : "white",
-        border : "none",
-        fontSize : "35px",
-        color: "#7E7979",
-        textDecoration : "underline",
-        }}>취소하기</div></Link>
-       <button class = "submit-btn" type="submit" style = {{
+            <div class = "wrapper">
+ <button class = "delete-btn" type="submit" style = {{
+             backgroundColor : "#FFFFFF",
+             borderRadius : "25px",
+             height: "63px",
+             width: "273px",
+             fontSize : "26px",
+             color: "#7E7979",
+             borderColor : "#585858",
+             borderWidth: "1px",
+            boxShadow : "2px 2px 2px #585858;"
+       }}>삭제하기</button>
+          <Link href = '/share/share_form'><button class = "submit-btn" type="submit" style = {{
              backgroundColor : "#F85757",
              borderRadius : "25px",
              height: "63px",
              width: "273px",
              fontSize : "26px",
              color: "white",
-       }}>글 등록하기</button>
+             border : "none",
+             boxShadow : "2px 2px 2px #585858;"
+       }}>글 등록하기</button></Link>
+        </div> 
+
+ </div>      
+   </div>
+   <Divider />
+   <div class = "section-main">
+      <div class = "wrapper">
+      <DescriptionIcon/>        
+      <span style = {{ fontSize : "35px", fontWeight : "bold" }}>정보</span>
+      </div>
+        <div class = "desc" style = {{fontSize : "30px", color : "#1A1818"}}>제가 수업을 마쳤는데 가방이 너무 무겁네요 ; 옮겨주실분 구해요</div>
         </div>
-    </form>
-    {/* <style global jsx>{imgStyle}</style>
-    <style global jsx>{formStyle}</style>
-    <style global jsx>{btnStyle}</style> */}
-</div>
-</article>
-);
+        <Divider />
+        <div class ="section-bottom" style={{
+           display: "flex",
+           flexFlow : "column"
+            }}>
+        <div class= "comment-num">
+            <span>댓글</span>
+            <span>1</span>
+        </div>
+        <div class = "comment-form-box" style = {{ 
+            // flexFlow : 'row', 
+            // alignContent:"baseline" , 
+            height: "70px", 
+            width : "1129px",
+            border: "1px  solid #7A7A7A", 
+            backgroundColor : "white",
+            borderWidth : "1px",
+            }}>
+                
+            <input id = "comment-form" name="comment" type="text" placeholder="댓글을 입력하세요" style = {{  
+                    fontSize : "30px",   
+                    border : "none",
+                    width : "960px" 
+             }}></input>
+         <button class = "comment-btn" type="submit" style = {{
+             backgroundColor : "white",
+             height: "68px",
+             width: "166px",
+             fontSize : "25px",
+             color: "#1A1818",
+             borderLeft: "0.8px solid #767676",
+             borderRight : "none",
+             borderTop : "none",
+             borderBottom : "none",
+             justifySelf: "end",
+       }}><CreateIcon/>등록</button>
+      </div>
+      <div class = "comment-box">
+          <p style= {{fontSize : "30px"}}>제꺼도 같이 해주실 분 ^^..</p>
+          <div class = "wrapper">
+        <img className="profile-img" src="/images/profile_image.png" style ={{borderRadius: "50%"}} alt="logo"/>
+        <span className ="profile-name" style={{
+            fontSize : "25px"
+            }}> 김민지</span>
+        <span className ="post-date" style={{
+            fontSize : "25px",
+            color: "#727272",
+            }} >2021.4.21</span>
+             <button class = "reply-btn" type="submit" style = {{
+             backgroundColor : "white",
+            border : "none",
+             fontSize : "25px",
+             color: "#1A1818",
+       }}>
+           <ReplyIcon />
+           댓글달기</button>
+            </div>
+      </div>
+    </div>
+   </div>
 
+       
+   </article>
+    );
 ``}
-
-// const btnStyle = css`
-//   .cancel-btn{
-//     background-color : "white";
-//     border : "none";
-//     font-size : "26px";
-//     color: "black";
-//     text-decoration : "underline";
-//   }
-//   .submit-btn{
-//     background-color : "#F85757";
-//     border-radius : "25px";
-//     height: "63px";
-//     width: "273px";
-//     font-size : "26px";
-//     color: "white";
-//   }
-// `;
-// const imgStyle = css`
-//   .profile-img{
-//     border-radius: "50%",
-//   }
-// `;
-
-// const formStyle = css`
-// .img-form {
-//   background-color : "white";
-//   height: "416px";
-//   width: "404px";
-//   box-shadow : "1px 1px 2px grey";
-//   border : "1px solid DCDCDC";
-// }
-
-// .category-form{
-//   background:"url('/images/selection_arrow.png') no-repeat 97% 50%/25px auto";
-//   border : "1px solid #606060";
-//   border-radius : "10px";
-//   width : "180px";
-//   height : "52px";
-// }
-
-// #title-form{
-//   background-color : "white";
-//   height: "92px";
-//   width: "644px";
-//   font-size : "45px";
-//   z-index:1;
-// }
-
-// #desc-form{
-//   background-color : "white";
-//   height: "482px";
-//   width: "1128px";
-//   z-index:1;
-// }
-// `;
