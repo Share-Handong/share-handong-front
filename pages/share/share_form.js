@@ -1,10 +1,9 @@
 import "semantic-ui-css/semantic.min.css";
 import { Divider } from "semantic-ui-react";
 import React, { useEffect, useState } from "react";
-import Link from 'next/link'
+import Link from 'next/link';
 import DescriptionIcon from '@material-ui/icons/Description';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-// import css from "styled-jsx/css";
+import Background from "./components/background.js";
 
 
 export default function ShareForm() {
@@ -35,35 +34,20 @@ export default function ShareForm() {
   }
 
     return( 
-    <article style={{
-      margin: "0px",
-      paddingTop : "50px",
-      paddingLeft:"60px",
-      paddingRight:"60px",
-    }}>
-     <div  style={{
-              backgroundColor : "white",
-              height: "1525px",
-              margin: "0px",
-              paddingTop : "85px",
-              paddingLeft:"65px",
-              paddingRight:"65px",
-              zIndex:1,
-            }} >
-   
+   <Background>
  <form action="/create_process" method="post" onSubmit={createPost}>
-   <div class= "section-top" style={{
+   <div className= "section-top" style={{
            display: "inline-flex"
             }}>
-     <div class = "wrapper">
+     <div className = "wrapper">
         <img className="img-form" src="/images/product_image.png" alt="logo" style= {{ backgroundColor : "white",
   height: "416px",
   width: "404px",
   boxShadow : "1px 1px 2px grey",
   border : "1px solid DCDCDC"}}/>
             </div>
-<div class = "wrapper"  style = {{paddingLeft : "80px"}}>
- <div class = "category-form" style = {{
+<div className = "wrapper"  style = {{paddingLeft : "80px"}}>
+ <div className = "category-form" style = {{
    background:"url('/images/selection_arrow.png') no-repeat 97% 50%/25px auto",
    border : "1px solid #606060",
    borderRadius : "10px",
@@ -95,7 +79,7 @@ export default function ShareForm() {
   fontSize : "45px",
   zIndex:1,
   }}></input></p>
-      <div class = "wrapper" style = {{paddingTop : "40px", display : "inline-flex" , flexDirection : "row", alignItems: "center"}}>
+      <div className = "wrapper" style = {{paddingTop : "40px", display : "inline-flex" , flexDirection : "row", alignItems: "center"}}>
         <img className="profile-img" style ={{borderRadius: "50%",            
         marginRight: "18px"}} src="/images/profile_image.png" alt="logo"/>
         <span className ="profile-name" style={{
@@ -110,8 +94,8 @@ export default function ShareForm() {
             </div>
             </div>
       <Divider />
-      <div class = "section-main">
-      <div class = "wrapper" style ={{marginTop : "60px" , paddingBottom : "34px", }}>
+      <div className = "section-main">
+      <div className = "wrapper" style ={{marginTop : "60px" , paddingBottom : "34px", }}>
       <DescriptionIcon style={{ fontSize: 35 }}/>        
       <span style = {{ fontSize : "35px", fontWeight : "bold", paddingLeft: "8px" ,color : "#1A1818"}}>정보</span>
       </div>
@@ -122,7 +106,7 @@ export default function ShareForm() {
   zIndex:1,
   }}></textarea>
         </div>
-        <div class ="section-bottom" style={{
+        <div className ="section-bottom" style={{
           width : "1128px",
            display: "inline-flex",
            flexFlow : "row",
@@ -130,7 +114,7 @@ export default function ShareForm() {
            alignItems : "center",
            marginTop : "56px"
             }}>
-       <Link href = '/' class = "cancel-btn" >
+       <Link href = '/' className = "cancel-btn" >
           <div style= {{ 
          backgroundColor : "white",
         border : "none",
@@ -139,7 +123,7 @@ export default function ShareForm() {
         textDecoration : "underline",
         paddingRight : "48px"
         }}>취소하기</div></Link>
-       <button class = "submit-btn" type="submit" style = {{
+       <button className = "submit-btn" type="submit" style = {{
              backgroundColor : "#F85757",
              borderRadius : "25px",
              height: "63px",
@@ -151,8 +135,7 @@ export default function ShareForm() {
        }}>글 등록하기</button>
         </div>
     </form>
-</div>
-</article>
+</Background>
 );
 
 ``}
