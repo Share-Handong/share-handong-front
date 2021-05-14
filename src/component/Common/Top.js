@@ -1,5 +1,18 @@
-import { Icon, Input } from "semantic-ui-react";
+import { Input } from "semantic-ui-react";
 import css from "styled-jsx/css";
+import { IconButton } from "@material-ui/core";
+import { GoogleIcon } from "./icons";
+
+import React from "react";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import PersonOutlinedIcon from "@material-ui/icons/PersonOutline";
+import NotificationsOutlinedIcon from "@material-ui/icons/NotificationsOutlined";
+import GoogleLogin from "react-google-login";
 
 const style = css`
   .top-wrap {
@@ -8,7 +21,77 @@ const style = css`
   }
 `;
 
+const responseGoogle = (response) => {
+  console.log(response); 
+};
+
+// 성공 콜백 시 출력되는 JSON값 profileObj 데이터를 사용하면 될 듯해요
+// {  
+//   "El":"115542265492867015125",
+//   "Zi":{  
+//      "token_type":"Bearer",
+//      "access_token":"ya29.Gl1F...Xz4uE",
+//      "scope":"email prof...profile openid",
+//      "login_hint":"AJD...XKQQ",
+//      "expires_in":3600,
+//      "id_token":"eyJhbGc...JhY2Nv",
+//      "session_state":{  
+//         "extraQueryParams":{  
+//            "authuser":"0"
+//         }
+//      },
+//      "first_issued_at":1563090245757,
+//      "expires_at":1563093845757,
+//      "idpId":"google"
+//   },
+//   "w3":{  
+//      "Eea":"11...15125",
+//      "ig":"TaeMin Moon",
+//      "ofa":"TaeMin",
+//      "wea":"Moon",
+//      "Paa":"http...oto.jpg",
+//      "U3":"tmmoond8@gmail.com"
+//   },
+//   "googleId":"115...15125",
+//   "tokenObj":{  
+//      "token_type":"Bearer",
+//      "access_token":"ya2...CHXz4uE",
+//      "scope":"email ...e openid",
+//      "login_hint":"AJDL...KQQ",
+//      "expires_in":3600,
+//      "id_token":"eyJhb...FUaw",
+//      "session_state":{  
+//         "extraQueryParams":{  
+//            "authuser":"0"
+//         }
+//      },
+//      "first_issued_at":1563090245757,
+//      "expires_at":1563093845757,
+//      "idpId":"google"
+//   },
+//   "tokenId":"eyJhbGciOi...4AaCByCFUaw",
+//   "accessToken":"ya29....4uE",
+//   "profileObj":{  
+//      "googleId":"115...5",
+//      "imageUrl":"https...UBA/s96-c/photo.jpg",
+//      "email":"tmmoond8@gmail.com",
+//      "name":"TaeMin Moon",
+//      "givenName":"TaeMin",
+//      "familyName":"Moon"
+//   }
+// }
+
 export default function Top() {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
       <div className="top-wrap">
@@ -27,7 +110,7 @@ export default function Top() {
             placeholder="Search..."
           />
           {/* 알림 */}
-          <Icon
+          {/* <Icon
             style={{
               width: "5%",
               height: "40px",
@@ -37,18 +120,55 @@ export default function Top() {
               fontSize: "25px",
             }}
             name="bell outline"
-          />
-          {/* 마이페이지 */}
-          <Icon
-            style={{
-              width: "5%",
-              height: "40px",
-              lineHeight: "40px",
-              marginTop: "10px",
-              fontSize: "25px",
-            }}
-            name="user outline"
-          />
+          /> */}
+          <IconButton aria-label="notifications" size="medium">
+            <NotificationsOutlinedIcon />
+          </IconButton>
+          <IconButton
+            aria-label="user-login"
+            size="medium"
+            onClick={handleClickOpen}
+          >
+            <PersonOutlinedIcon />
+          </IconButton>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="form-dialog-title"
+          >
+            <DialogTitle id="form-dialog-title">
+              Share Handong 로그인
+            </DialogTitle>
+            <DialogContent>
+              <GoogleLogin
+                clientId="276879982468-ros409es0l58ds23fq9v08thamqccbab.apps.googleusercontent.com"
+                render={(renderProps) => (
+                  <Button
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                    variant="contained"
+                    size="large"
+                  >
+                    구글 계정으로 로그인
+                  </Button>
+                )}
+                buttonText="Login"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy="single_host_origin"
+              />
+            </DialogContent>
+            <DialogContent>
+              <Button
+                variant="contained"
+                onClick={handleClose}
+                color="primary"
+                size="large"
+              >
+                로그인 없이 시작하기
+              </Button>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
       <style jsx>{`
