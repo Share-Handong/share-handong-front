@@ -1,18 +1,16 @@
 import { Input } from "semantic-ui-react";
 import css from "styled-jsx/css";
 import { IconButton } from "@material-ui/core";
-import { GoogleIcon } from "./icons";
 
 import React from "react";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import PersonOutlinedIcon from "@material-ui/icons/PersonOutline";
 import NotificationsOutlinedIcon from "@material-ui/icons/NotificationsOutlined";
 import GoogleLogin from "react-google-login";
+import AuthService from "./AuthService";
 
 const style = css`
   .top-wrap {
@@ -21,22 +19,18 @@ const style = css`
   }
 `;
 
-const responseGoogle = (response) => {
-  console.log(response); 
-};
-
 // 성공 콜백 시 출력되는 JSON값 profileObj 데이터를 사용하면 될 듯해요
-// {  
+// {
 //   "El":"115542265492867015125",
-//   "Zi":{  
+//   "Zi":{
 //      "token_type":"Bearer",
 //      "access_token":"ya29.Gl1F...Xz4uE",
 //      "scope":"email prof...profile openid",
 //      "login_hint":"AJD...XKQQ",
 //      "expires_in":3600,
 //      "id_token":"eyJhbGc...JhY2Nv",
-//      "session_state":{  
-//         "extraQueryParams":{  
+//      "session_state":{
+//         "extraQueryParams":{
 //            "authuser":"0"
 //         }
 //      },
@@ -44,7 +38,7 @@ const responseGoogle = (response) => {
 //      "expires_at":1563093845757,
 //      "idpId":"google"
 //   },
-//   "w3":{  
+//   "w3":{
 //      "Eea":"11...15125",
 //      "ig":"TaeMin Moon",
 //      "ofa":"TaeMin",
@@ -53,15 +47,15 @@ const responseGoogle = (response) => {
 //      "U3":"tmmoond8@gmail.com"
 //   },
 //   "googleId":"115...15125",
-//   "tokenObj":{  
+//   "tokenObj":{
 //      "token_type":"Bearer",
 //      "access_token":"ya2...CHXz4uE",
 //      "scope":"email ...e openid",
 //      "login_hint":"AJDL...KQQ",
 //      "expires_in":3600,
 //      "id_token":"eyJhb...FUaw",
-//      "session_state":{  
-//         "extraQueryParams":{  
+//      "session_state":{
+//         "extraQueryParams":{
 //            "authuser":"0"
 //         }
 //      },
@@ -71,7 +65,7 @@ const responseGoogle = (response) => {
 //   },
 //   "tokenId":"eyJhbGciOi...4AaCByCFUaw",
 //   "accessToken":"ya29....4uE",
-//   "profileObj":{  
+//   "profileObj":{
 //      "googleId":"115...5",
 //      "imageUrl":"https...UBA/s96-c/photo.jpg",
 //      "email":"tmmoond8@gmail.com",
@@ -85,11 +79,56 @@ export default function Top() {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
-    setOpen(true);
+    // 로그인이 되어있을 때(localstorage에 저장 되어있을 때)
+    if (AuthService.executeJwtAuthLogin()) {
+      if (AuthService.isUserLoggedIn()) {
+        alert("로그인 되어있습니다, 추후 마이페이지로 이동");
+        setOpen(false);
+      }
+    } else {
+      // 처음 로그인 (구글로그인 팝업 띄우기)
+      console.log("hi");
+      setOpen(true);
+    }
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const responseGoogle = (response) => {
+    console.log(response);
+    AuthService.executeJwtAuthenticationService(
+      response.profileObj.email,
+      response.profileObj.googleId,
+      response.profileObj.name,
+    )
+      .then((res) => {
+        console.log(res);
+        if (res.data.token) {
+          // 처음 로그인 한 경우 (sign up)
+          AuthService.registerSuccessfulLoginForJwt(
+            res.data.email,
+            res.data.token,
+            res.data.googleId,
+            res.data.name,
+          );
+        } else {
+          // 재 로그인
+          AuthService.executeJwtAuthLogin(
+            res.data.email,
+            res.data.googleId,
+            res.data.name,
+          );
+        }
+        handleClose();
+      })
+      .catch(() => {
+        // this.setState({ showSuccessMessage: false });
+        // this.setState({ hasLoginFailed: true });
+        console.log("login fail ㅠㅠ");
+        handleClose();
+      });
   };
 
   return (

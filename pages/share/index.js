@@ -186,7 +186,7 @@ export default function Share() {
               height: "70px",
               borderRight: "0.8px solid #767676",
             }}
-          ></input>
+          />
           <button
             className="comment-btn"
             type="submit"

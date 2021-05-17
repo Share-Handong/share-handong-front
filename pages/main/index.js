@@ -1,6 +1,4 @@
 import Head from "next/head";
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.css'
 
 export default function Main() {
   return (

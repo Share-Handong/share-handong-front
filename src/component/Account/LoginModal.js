@@ -12,8 +12,7 @@ class SignIn extends Component {
     this.setState({ [name]: value });
   };
 
-  loginClickHandler = () => {
-  };
+  loginClickHandler = () => {};
 
   render() {
     const { isOpen, close } = this.props;
@@ -27,10 +26,7 @@ class SignIn extends Component {
                   &times;
                 </span>
                 <div className="modalContents" onClick={isOpen}>
-                  <img
-                    className="signinIcon"
-                    src="/images/sh_logo.png"
-                  />
+                  <img className="signinIcon" src="/images/sh_logo.png" />
                   <input
                     name="email"
                     className="loginId"
@@ -46,7 +42,7 @@ class SignIn extends Component {
                     onChange={this.loginHandler}
                   />
                   <div className="loginMid">
-                    <label className="autoLogin" for="hint">
+                    <label className="autoLogin" htmlFor="hint">
                       {" "}
                       <input type="checkbox" id="hint" /> 로그인 유지하기
                     </label>
@@ -58,17 +54,11 @@ class SignIn extends Component {
                   </button>
                   <div className="socialBox">
                     <div className="kakao">
-                      <img
-                        className="kakaoLogo"
-                        src="/images/google.png"
-                      />
+                      <img className="kakaoLogo" src="/images/google.png" />
                       <div className="kakaoText">카카오 계정으로 신규가입</div>
                     </div>
                     <div className="facebook">
-                      <img
-                        className="facebookLogo"
-                        src="/images/google.png"
-                      />
+                      <img className="facebookLogo" src="/images/google.png" />
                       <div className="facebookText">
                         페이스북 계정으로 신규가입
                       </div>
