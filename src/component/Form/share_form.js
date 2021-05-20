@@ -1,9 +1,9 @@
 import "semantic-ui-css/semantic.min.css";
 import { Divider } from "semantic-ui-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import DescriptionIcon from "@material-ui/icons/Description";
-import Background from "./components/post_bg.js";
+import Background from "../Common/post_bg";
 
 export default function ShareForm() {
   const [category, setCategory] = useState("1");
@@ -26,7 +26,8 @@ export default function ShareForm() {
         "Content-Type": "application/json",
       },
       method: "POST",
-    }).then((res) => res.json());
+    }).then((value) => value.json());
+    console.log(res);
   };
 
   return (
@@ -101,7 +102,7 @@ export default function ShareForm() {
                   fontSize: "45px",
                   zIndex: 1,
                 }}
-              ></input>
+              />
             </p>
             <div
               className="wrapper"
@@ -168,7 +169,7 @@ export default function ShareForm() {
               width: "1128px",
               zIndex: 1,
             }}
-          ></textarea>
+          />
         </div>
         <div
           className="section-bottom"
@@ -215,62 +216,4 @@ export default function ShareForm() {
       </form>
     </Background>
   );
-
-  ``;
 }
-
-// const btnStyle = css`
-//   .cancel-btn{
-//     background-color : "white";
-//     border : "none";
-//     font-size : "26px";
-//     color: "black";
-//     text-decoration : "underline";
-//   }
-//   .submit-btn{
-//     background-color : "#F85757";
-//     border-radius : "25px";
-//     height: "63px";
-//     width: "273px";
-//     font-size : "26px";
-//     color: "white";
-//   }
-// `;
-// const imgStyle = css`
-//   .profile-img{
-//     border-radius: "50%",
-//   }
-// `;
-
-// const formStyle = css`
-// .img-form {
-//   background-color : "white";
-//   height: "416px";
-//   width: "404px";
-//   box-shadow : "1px 1px 2px grey";
-//   border : "1px solid DCDCDC";
-// }
-
-// .category-form{
-//   background:"url('/images/selection_arrow.png') no-repeat 97% 50%/25px auto";
-//   border : "1px solid #606060";
-//   border-radius : "10px";
-//   width : "180px";
-//   height : "52px";
-// }
-
-// #title-form{
-//   background-color : "white";
-//   height: "92px";
-//   width: "644px";
-//   font-size : "45px";
-//   z-index:1;
-// }
-
-// #desc-form{
-//   background-color : "white";
-//   height: "482px";
-//   width: "1128px";
-//   z-index:1;
-// }
-// `;
