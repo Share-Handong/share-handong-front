@@ -1,12 +1,14 @@
 import Link from "next/link";
 import "semantic-ui-css/semantic.min.css";
-import { Divider, Placeholder } from "semantic-ui-react";
+import { Divider } from "semantic-ui-react";
 import ReplyIcon from "@material-ui/icons/Reply";
 import CreateIcon from "@material-ui/icons/Create";
 import DescriptionIcon from "@material-ui/icons/Description";
-import Background from "./components/post_bg.js";
-
+import Background from "../../src/component/Common/post_bg";
+import AuthService from "../../src/component/Common/AuthService";
 export default function Share() {
+  const checkLogin = AuthService.isUserLoggedIn === true;
+
   return (
     <Background>
       <div
@@ -79,8 +81,8 @@ export default function Share() {
               2021.4.21
             </span>
           </div>
-          <div className="wrapper" style={{ marginTop: "54px" }}>
-            <button
+          {checkLogin ? <div className="wrapper" style={{ marginTop: "54px" }}>
+          <button
               className="delete-btn"
               type="submit"
               style={{
@@ -99,7 +101,7 @@ export default function Share() {
             >
               삭제하기
             </button>
-            <Link href="/share/share_form">
+            <Link href="/share-form">
               <button
                 className="submit-btn"
                 type="submit"
@@ -115,10 +117,49 @@ export default function Share() {
                   textAlign: "center",
                 }}
               >
-                "수정하기"
+                수정하기
               </button>
             </Link>
-          </div>
+          </div> : <div className="wrapper" style={{ marginTop: "54px" }}>
+          <button
+              className="delete-btn"
+              type="submit"
+              style={{
+                backgroundColor: "#FFFFFF",
+                borderRadius: "25px",
+                height: "63px",
+                width: "273px",
+                fontSize: "26px",
+                color: "#7E7979",
+                borderColor: "#585858",
+                borderWidth: "1px",
+                boxShadow: "2px 2px 2px #585858",
+                marginRight: "36px",
+                textAlign: "center",
+              }}
+            >
+              찜하기
+            </button>
+            {/* <Link href="/share-form"> */}
+              <button
+                className="submit-btn"
+                type="submit"
+                style={{
+                  backgroundColor: "#F85757",
+                  borderRadius: "25px",
+                  height: "63px",
+                  width: "273px",
+                  fontSize: "26px",
+                  color: "white",
+                  border: "none",
+                  boxShadow: "2px 2px 2px #585858;",
+                  textAlign: "center",
+                }}
+              >
+                연락하기
+              </button>
+            {/* </Link> */}
+          </div>}
         </div>
       </div>
       <Divider />
@@ -200,7 +241,6 @@ export default function Share() {
               justifySelf: "end",
               paddingRight: "36px",
               textAlign: "center",
-              backgroundColor: "transparent",
               overflow: "hidden",
             }}
           >
@@ -269,5 +309,4 @@ export default function Share() {
       </div>
     </Background>
   );
-  ``;
 }
