@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import DescriptionIcon from "@material-ui/icons/Description";
 import Background from "../../src/component/Common/post_bg";
+import axios from 'axios'
 
 export default function ShareForm() {
   const [category, setCategory] = useState("1");
@@ -13,22 +14,24 @@ export default function ShareForm() {
     setCategory(event.target.value);
   };
 
-  const createPost = async (event) => {
+  const createPost = async(event) =>{
     event.preventDefault();
-
-    const res = await fetch("http://localhost:3000/api/register", {
-      body: JSON.stringify({
+    axios.post("http://localhost:3000/api", 
+    { 
         title: event.target.title.value,
         desc: event.target.desc.value,
         category: Number(category),
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-    }).then((value) => value.json());
-    console.log(res);
-  };
+     }, 
+    { 
+     headers:{ 
+      'Content-type': 'application/json', 
+      'Accept': 'application/json' 
+        } 
+      } 
+  ) 
+    .then((response) => { console.log(response.data); }) 
+    .catch((response) => { console.log('Error!'); });
+}
 
   return (
     <Background>
