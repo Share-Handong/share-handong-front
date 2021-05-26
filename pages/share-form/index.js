@@ -1,26 +1,79 @@
 import "semantic-ui-css/semantic.min.css";
 import { Divider } from "semantic-ui-react";
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import DescriptionIcon from "@material-ui/icons/Description";
 import Background from "../../src/component/Common/post_bg";
 import axios from 'axios'
 import { useRouter } from 'next/router'
 
-export default function ShareForm(data, type) {
-  const [category, setCategory] = useState("1");
-  const router = useRouter();
-  const handleChange = async (event) => {
-    event.preventDefault();
-    setCategory(event.target.value);
+export default function ShareForm() {
+
+  const router = useRouter()
+  
+  const [postData, setPostData] = useState({
+    userId : "",
+    id : "",
+    title : "",
+    body : "",
+    imgUrl:"",
+    uploadTime:"",
+    category: 1,
+  });
+
+  const [userData, setUserData] = useState({
+    name : "",
+    profileImg : "",
+  });
+
+  const titleInput = useRef();
+  const bodyInput = useRef();
+
+  const {title, body} = {title: postData.title, body :postData.body}; 
+  const { imgUrl, uploadTime , category } = {imgUrl: "/images/product_image.png", uploadTime: "2021.4.21", category:postData.category}; 
+  const { name, profileImg } = userData; 
+
+  useEffect(()=>{
+    // if (router.query.data == "modify"){
+      // console.log(router.query.data);
+      loadPostData("2");
+      loadUserData("2");
+    // }
+  
+  },[]);
+
+  
+  function loadPostData(id){
+    axios.get("http://jsonplaceholder.typicode.com/posts?id="+ id).then(res=> {
+      setPostData(res.data[0]);
+      console.log(res.data[0]);
+    });
+  }
+
+  function loadUserData(){
+    axios.get("http://jsonplaceholder.typicode.com/users?id=2").then(res=> {
+      setUserData({
+        name :res.data[0].username,
+        profileImg : "/images/profile_image.png",
+      });
+      console.log(res.data[0]);
+    });
+  }
+
+  const handleChange = e => {
+    const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
+    setPostData({
+      ...postData, // 기존의 input 객체를 복사한 뒤
+      [name]: value // name 키를 가진 값을 value 로 설정
+    });
   };
 
   const createPost = async(event) =>{
     event.preventDefault();
     axios.post("http://localhost:3000/api", 
     { 
-        title: event.target.title.value,
-        desc: event.target.desc.value,
+        title: title,
+        desc: body,
         category: Number(category),
      }, 
     { 
@@ -48,7 +101,7 @@ export default function ShareForm(data, type) {
           <div className="wrapper">
             <img
               className="img-form"
-              src="/images/product_image.png"
+              src={imgUrl}
               alt="logo"
               style={{
                 backgroundColor: "white",
@@ -101,6 +154,9 @@ export default function ShareForm(data, type) {
                 id="title-form"
                 name="title"
                 type="text"
+                onChange={handleChange}
+                ref={titleInput}
+                value = {title}
                 style={{
                   backgroundColor: "white",
                   height: "92px",
@@ -122,7 +178,7 @@ export default function ShareForm(data, type) {
               <img
                 className="profile-img"
                 style={{ borderRadius: "50%", marginRight: "18px" }}
-                src="/images/profile_image.png"
+                src= {profileImg}
                 alt="logo"
               />
               <span
@@ -132,8 +188,7 @@ export default function ShareForm(data, type) {
                   paddingRight: "36px",
                 }}
               >
-                {" "}
-                김민지
+               {name}
               </span>
               <span
                 className="post-date"
@@ -142,7 +197,7 @@ export default function ShareForm(data, type) {
                   color: "#727272",
                 }}
               >
-                2021.4.21
+                {uploadTime}
               </span>
             </div>
           </div>
@@ -167,8 +222,11 @@ export default function ShareForm(data, type) {
           </div>
           <textarea
             id="desc-form"
-            name="desc"
+            name="body"
             type="text"
+            value = {postData.body}
+            ref={bodyInput}
+            onChange={handleChange}
             style={{
               backgroundColor: "white",
               height: "482px",
