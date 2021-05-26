@@ -143,7 +143,7 @@ export default function Share() {
             >
               삭제하기
             </button>
-            <Link href={{pathname: "/share-form", query: { data: postData, type : "modify"}}}>
+            <Link href={{pathname: "/share-form", query: {id: postData.id, type:"modify"}}}>
               <button
                 className="submit-btn"
                 type="submit"
