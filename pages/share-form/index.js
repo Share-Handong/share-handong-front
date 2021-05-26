@@ -5,10 +5,11 @@ import Link from "next/link";
 import DescriptionIcon from "@material-ui/icons/Description";
 import Background from "../../src/component/Common/post_bg";
 import axios from 'axios'
+import { useRouter } from 'next/router'
 
 export default function ShareForm() {
   const [category, setCategory] = useState("1");
-
+  const router = useRouter();
   const handleChange = async (event) => {
     event.preventDefault();
     setCategory(event.target.value);
@@ -29,10 +30,12 @@ export default function ShareForm() {
         } 
       } 
   ) 
-    .then((response) => { console.log(response.data); }) 
+    .then((response) => { 
+      console.log(response.data);
+      router.replace('/share');
+    }) 
     .catch((response) => { console.log('Error!'); });
 }
-
   return (
     <Background>
       <form action="/create_process" method="post" onSubmit={createPost}>
