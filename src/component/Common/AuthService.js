@@ -20,6 +20,9 @@ class AuthService {
         .then((res) => {
           console.log(res);
           localStorage.setItem("token", res.headers.refresh_token);
+          localStorage.setItem("authenticatedUser", reEmail);
+          localStorage.setItem("authenticatedUserId", rePw);
+          localStorage.setItem("authenticatedUserName", reName);
         });
       // 토큰 refresh
       console.log("refresh!!");
@@ -120,11 +123,12 @@ class AuthService {
     return false;
   };
 
-  getLoggedInUserName = () => {
+  getLoggedInUserInfo = () => {
     // let user = sessionStorage.getItem('authenticatedUser')
-    const user = localStorage.getItem("authenticatedUser");
-    if (user === null) return "";
-    return user;
+    const email = localStorage.getItem("authenticatedUser");
+    const name = localStorage.getItem("authenticatedUserName");
+    if (email === null) return "";
+    return { email, name };
   };
 }
 

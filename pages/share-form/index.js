@@ -3,8 +3,8 @@ import { Divider } from "semantic-ui-react";
 import React, { useState } from "react";
 import Link from "next/link";
 import DescriptionIcon from "@material-ui/icons/Description";
+import axios from "axios";
 import Background from "../../src/component/Common/post_bg";
-import axios from 'axios'
 
 export default function ShareForm() {
   const [category, setCategory] = useState("1");
@@ -14,24 +14,30 @@ export default function ShareForm() {
     setCategory(event.target.value);
   };
 
-  const createPost = async(event) =>{
+  const createPost = async (event) => {
     event.preventDefault();
-    axios.post("http://localhost:3000/api", 
-    { 
-        title: event.target.title.value,
-        desc: event.target.desc.value,
-        category: Number(category),
-     }, 
-    { 
-     headers:{ 
-      'Content-type': 'application/json', 
-      'Accept': 'application/json' 
-        } 
-      } 
-  ) 
-    .then((response) => { console.log(response.data); }) 
-    .catch((response) => { console.log('Error!'); });
-}
+    axios
+      .post(
+        "http://localhost:3000/api",
+        {
+          title: event.target.title.value,
+          desc: event.target.desc.value,
+          category: Number(category),
+        },
+        {
+          headers: {
+            "Content-type": "application/json",
+            Accept: "application/json",
+          },
+        },
+      )
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((response) => {
+        console.log("Error!");
+      });
+  };
 
   return (
     <Background>

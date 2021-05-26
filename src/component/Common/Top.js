@@ -1,6 +1,7 @@
 import { Input } from "semantic-ui-react";
 import css from "styled-jsx/css";
 import { IconButton } from "@material-ui/core";
+import { useRouter } from "next/router";
 
 import React from "react";
 import Button from "@material-ui/core/Button";
@@ -77,12 +78,13 @@ const style = css`
 
 export default function Top() {
   const [open, setOpen] = React.useState(false);
+  const router = useRouter();
 
   const handleClickOpen = () => {
     // 로그인이 되어있을 때(localstorage에 저장 되어있을 때)
     if (AuthService.executeJwtAuthLogin()) {
       if (AuthService.isUserLoggedIn()) {
-        alert("로그인 되어있습니다, 추후 마이페이지로 이동");
+        router.push("/mypage");
         setOpen(false);
       }
     } else {
