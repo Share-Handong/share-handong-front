@@ -6,12 +6,14 @@ import CreateIcon from "@material-ui/icons/Create";
 import DescriptionIcon from "@material-ui/icons/Description";
 import Background from "../../src/component/Common/post_bg";
 import AuthService from "../../src/component/Common/AuthService";
+import PostService from "../../src/component/Common/PostService";
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Share() {
 
-  const checkLogin = AuthService.isUserLoggedIn === true;
+  const checkLogin = AuthService.isUserLoggedIn === true; // 사용자- 포스팅 주인 id 비교 추가 예정 
   const [postData, setPostData] = useState({
     userId : "",
     id : "",
@@ -33,6 +35,7 @@ export default function Share() {
   useEffect(()=>{
     loadPostData();
     loadUserData();
+    console.log(AuthService.getLoggedInUserId);
   },[]);
   
   function loadPostData(){

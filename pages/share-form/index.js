@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 export default function ShareForm() {
 
   const router = useRouter()
-  
+  const {id, type} = router.query;
   const [postData, setPostData] = useState({
     userId : "",
     id : "",
@@ -34,29 +34,27 @@ export default function ShareForm() {
   const { name, profileImg } = userData; 
 
   useEffect(()=>{
-    // if (router.query.data == "modify"){
-      // console.log(router.query.data);
-      loadPostData("2");
-      loadUserData("2");
-    // }
+    if (type == "modify"){
+      loadPostData(id);
+      loadUserData(id);
+    }
   
   },[]);
 
   
-  function loadPostData(id){
-    axios.get("http://jsonplaceholder.typicode.com/posts?id="+ id).then(res=> {
+  function loadPostData(currentId){
+    axios.get("http://jsonplaceholder.typicode.com/posts?id="+ currentId).then(res=> {
       setPostData(res.data[0]);
-      console.log(res.data[0]);
     });
   }
 
-  function loadUserData(){
-    axios.get("http://jsonplaceholder.typicode.com/users?id=2").then(res=> {
+  function loadUserData(currentId){
+    axios.get("http://jsonplaceholder.typicode.com/users?id="+currentId).then(res=> {
       setUserData({
         name :res.data[0].username,
         profileImg : "/images/profile_image.png",
       });
-      console.log(res.data[0]);
+      // console.log(res.data[0]);
     });
   }
 
