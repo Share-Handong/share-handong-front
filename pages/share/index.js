@@ -143,7 +143,7 @@ export default function Share() {
             >
               삭제하기
             </button>
-            <Link href="/share-form">
+            <Link href={{pathname: "/share-form", query: { data: postData, type : "modify"}}}>
               <button
                 className="submit-btn"
                 type="submit"
@@ -319,8 +319,7 @@ export default function Share() {
                 paddingRight: "36px",
               }}
             >
-              {" "}
-              김민지
+              {name}
             </span>
             <span
               className="post-date"

@@ -7,7 +7,7 @@ import Background from "../../src/component/Common/post_bg";
 import axios from 'axios'
 import { useRouter } from 'next/router'
 
-export default function ShareForm() {
+export default function ShareForm(data, type) {
   const [category, setCategory] = useState("1");
   const router = useRouter();
   const handleChange = async (event) => {
