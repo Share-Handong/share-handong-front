@@ -6,8 +6,51 @@ import CreateIcon from "@material-ui/icons/Create";
 import DescriptionIcon from "@material-ui/icons/Description";
 import Background from "../../src/component/Common/post_bg";
 import AuthService from "../../src/component/Common/AuthService";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 export default function Share() {
+
   const checkLogin = AuthService.isUserLoggedIn === true;
+  const [postData, setPostData] = useState({
+    userId : "",
+    id : "",
+    title : "",
+    body : "",
+    imgUrl:"",
+    uploadTime:"",
+    category: 1,
+  });
+
+  const [userData, setUserData] = useState({
+    name : "",
+    profileImg : "",
+  });
+
+  const { title, body, imgUrl, uploadTime,category } = {title: postData.title, body :postData.body, imgUrl: "/images/product_image.png", uploadTime: "2021.4.21", category:2}; 
+  const { name, profileImg } = userData; 
+
+  useEffect(()=>{
+    loadPostData();
+    loadUserData();
+  },[]);
+  
+  function loadPostData(){
+    axios.get("http://jsonplaceholder.typicode.com/posts?id=2").then(res=> {
+      setPostData(res.data[0]);
+      console.log(res.data[0]);
+    });
+  }
+
+  function loadUserData(){
+    axios.get("http://jsonplaceholder.typicode.com/users?id=2").then(res=> {
+      setUserData({
+        name :res.data[0].username,
+        profileImg : "/images/profile_image.png",
+      });
+      console.log(res.data[0]);
+    });
+  }
 
   return (
     <Background>
@@ -20,7 +63,7 @@ export default function Share() {
         <div className="wrapper">
           <img
             className="img-form"
-            src="/images/product_image.png"
+            src={imgUrl}
             alt="logo"
             style={{
               backgroundColor: "white",
@@ -41,10 +84,10 @@ export default function Share() {
               marginBottom: "20px",
             }}
           >
-            나눔받기
+            {category == 1 ? "나눔받기" : "나눔하기"}
           </div>
           <div className="title " style={{ fontSize: "45px" }}>
-            <p>무거운 가방 옮겨주실 분 찾아요</p>
+            <p>{title}</p>
           </div>
           <div
             className="wrapper"
@@ -58,7 +101,7 @@ export default function Share() {
             <img
               className="profile-img"
               style={{ borderRadius: "50%", marginRight: "18px" }}
-              src="/images/profile_image.png"
+              src={profileImg}
               alt="logo"
             />
             <span
@@ -68,8 +111,7 @@ export default function Share() {
                 paddingRight: "36px",
               }}
             >
-              {" "}
-              김민지
+              {name}
             </span>
             <span
               className="post-date"
@@ -78,10 +120,10 @@ export default function Share() {
                 color: "#727272",
               }}
             >
-              2021.4.21
+              {uploadTime}
             </span>
           </div>
-          {checkLogin ? <div className="wrapper" style={{ marginTop: "54px" }}>
+          {!checkLogin ? <div className="wrapper" style={{ marginTop: "54px" }}>
           <button
               className="delete-btn"
               type="submit"
@@ -184,7 +226,7 @@ export default function Share() {
           className="desc"
           style={{ fontSize: "30px", color: "#1A1818", paddingBottom: "100px" }}
         >
-          제가 수업을 마쳤는데 가방이 너무 무겁네요 ; 옮겨주실분 구해요
+          {body}
         </div>
       </div>
       <Divider />
