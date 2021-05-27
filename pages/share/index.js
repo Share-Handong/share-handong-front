@@ -4,11 +4,63 @@ import { Divider } from "semantic-ui-react";
 import ReplyIcon from "@material-ui/icons/Reply";
 import CreateIcon from "@material-ui/icons/Create";
 import DescriptionIcon from "@material-ui/icons/Description";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Background from "../../src/component/Common/post_bg";
 import AuthService from "../../src/component/Common/AuthService";
+<<<<<<< HEAD
+// import PostService from "../../src/component/Common/PostService";
 
+=======
+>>>>>>> parent of 8f9fa74... feat: 마이페이지 진행중
 export default function Share() {
-  const checkLogin = AuthService.isUserLoggedIn === true;
+  const checkLogin = AuthService.isUserLoggedIn === true; // 사용자- 포스팅 주인 id 비교 추가 예정
+  const [postData, setPostData] = useState({
+    userId: "",
+    id: "",
+    title: "",
+    body: "",
+    imgUrl: "",
+    uploadTime: "",
+    category: 1,
+  });
+
+  const [userData, setUserData] = useState({
+    name: "",
+    profileImg: "",
+  });
+
+  const { title, body, imgUrl, uploadTime, category } = {
+    title: postData.title,
+    body: postData.body,
+    imgUrl: "/images/product_image.png",
+    uploadTime: "2021.4.21",
+    category: 2,
+  };
+  const { name, profileImg } = userData;
+
+  useEffect(() => {
+    loadPostData();
+    loadUserData();
+    console.log(AuthService.getLoggedInUserId);
+  }, []);
+
+  function loadPostData() {
+    axios.get("http://jsonplaceholder.typicode.com/posts?id=2").then((res) => {
+      setPostData(res.data[0]);
+      console.log(res.data[0]);
+    });
+  }
+
+  function loadUserData() {
+    axios.get("http://jsonplaceholder.typicode.com/users?id=2").then((res) => {
+      setUserData({
+        name: res.data[0].username,
+        profileImg: "/images/profile_image.png",
+      });
+      console.log(res.data[0]);
+    });
+  }
 
   return (
     <Background>
@@ -21,7 +73,7 @@ export default function Share() {
         <div className="wrapper">
           <img
             className="img-form"
-            src="/images/product_image.png"
+            src={imgUrl}
             alt="logo"
             style={{
               backgroundColor: "white",
@@ -42,10 +94,10 @@ export default function Share() {
               marginBottom: "20px",
             }}
           >
-            나눔받기
+            {category == 1 ? "나눔받기" : "나눔하기"}
           </div>
           <div className="title " style={{ fontSize: "45px" }}>
-            <p>무거운 가방 옮겨주실 분 찾아요</p>
+            <p>{title}</p>
           </div>
           <div
             className="wrapper"
@@ -59,7 +111,7 @@ export default function Share() {
             <img
               className="profile-img"
               style={{ borderRadius: "50%", marginRight: "18px" }}
-              src="/images/profile_image.png"
+              src={profileImg}
               alt="logo"
             />
             <span
@@ -69,8 +121,7 @@ export default function Share() {
                 paddingRight: "36px",
               }}
             >
-              {" "}
-              김민지
+              {name}
             </span>
             <span
               className="post-date"
@@ -79,10 +130,11 @@ export default function Share() {
                 color: "#727272",
               }}
             >
-              2021.4.21
+              {uploadTime}
             </span>
           </div>
-          {checkLogin ? (
+<<<<<<< HEAD
+          {!checkLogin ? (
             <div className="wrapper" style={{ marginTop: "54px" }}>
               <button
                 className="delete-btn"
@@ -103,48 +155,116 @@ export default function Share() {
               >
                 삭제하기
               </button>
-              <Link href="/share-form">
+              <Link
+                href={{
+                  pathname: "/share-form",
+                  query: { id: postData.id, type: "modify" },
+                }}
+              >
                 <button
-                  className="submit-btn"
+                  className="delete-btn"
                   type="submit"
                   style={{
-                    backgroundColor: "#F85757",
+                    backgroundColor: "#FFFFFF",
                     borderRadius: "25px",
                     height: "63px",
                     width: "273px",
                     fontSize: "26px",
-                    color: "white",
-                    border: "none",
-                    boxShadow: "2px 2px 2px #585858;",
+                    color: "#7E7979",
+                    borderColor: "#585858",
+                    borderWidth: "1px",
+                    boxShadow: "2px 2px 2px #585858",
+                    marginRight: "36px",
                     textAlign: "center",
                   }}
                 >
-                  수정하기
+                  삭제하기
                 </button>
+                <Link href="/share-form">
+                  <button
+                    className="submit-btn"
+                    type="submit"
+                    style={{
+                      backgroundColor: "#F85757",
+                      borderRadius: "25px",
+                      height: "63px",
+                      width: "273px",
+                      fontSize: "26px",
+                      color: "white",
+                      border: "none",
+                      boxShadow: "2px 2px 2px #585858;",
+                      textAlign: "center",
+                    }}
+                  >
+                    수정하기
+                  </button>
+                </Link>
               </Link>
             </div>
           ) : (
             <div className="wrapper" style={{ marginTop: "54px" }}>
+=======
+          {checkLogin ? <div className="wrapper" style={{ marginTop: "54px" }}>
+          <button
+              className="delete-btn"
+              type="submit"
+              style={{
+                backgroundColor: "#FFFFFF",
+                borderRadius: "25px",
+                height: "63px",
+                width: "273px",
+                fontSize: "26px",
+                color: "#7E7979",
+                borderColor: "#585858",
+                borderWidth: "1px",
+                boxShadow: "2px 2px 2px #585858",
+                marginRight: "36px",
+                textAlign: "center",
+              }}
+            >
+              삭제하기
+            </button>
+            <Link href="/share-form">
+>>>>>>> parent of 8f9fa74... feat: 마이페이지 진행중
               <button
-                className="delete-btn"
+                className="submit-btn"
                 type="submit"
                 style={{
-                  backgroundColor: "#FFFFFF",
+                  backgroundColor: "#F85757",
                   borderRadius: "25px",
                   height: "63px",
                   width: "273px",
                   fontSize: "26px",
-                  color: "#7E7979",
-                  borderColor: "#585858",
-                  borderWidth: "1px",
-                  boxShadow: "2px 2px 2px #585858",
-                  marginRight: "36px",
+                  color: "white",
+                  border: "none",
+                  boxShadow: "2px 2px 2px #585858;",
                   textAlign: "center",
                 }}
               >
-                찜하기
+                수정하기
               </button>
-              {/* <Link href="/share-form"> */}
+            </Link>
+          </div> : <div className="wrapper" style={{ marginTop: "54px" }}>
+          <button
+              className="delete-btn"
+              type="submit"
+              style={{
+                backgroundColor: "#FFFFFF",
+                borderRadius: "25px",
+                height: "63px",
+                width: "273px",
+                fontSize: "26px",
+                color: "#7E7979",
+                borderColor: "#585858",
+                borderWidth: "1px",
+                boxShadow: "2px 2px 2px #585858",
+                marginRight: "36px",
+                textAlign: "center",
+              }}
+            >
+              찜하기
+            </button>
+            {/* <Link href="/share-form"> */}
               <button
                 className="submit-btn"
                 type="submit"
@@ -162,9 +282,8 @@ export default function Share() {
               >
                 연락하기
               </button>
-              {/* </Link> */}
-            </div>
-          )}
+            {/* </Link> */}
+          </div>}
         </div>
       </div>
       <Divider />
@@ -189,7 +308,7 @@ export default function Share() {
           className="desc"
           style={{ fontSize: "30px", color: "#1A1818", paddingBottom: "100px" }}
         >
-          제가 수업을 마쳤는데 가방이 너무 무겁네요 ; 옮겨주실분 구해요
+          {body}
         </div>
       </div>
       <Divider />
@@ -282,8 +401,7 @@ export default function Share() {
                 paddingRight: "36px",
               }}
             >
-              {" "}
-              김민지
+              {name}
             </span>
             <span
               className="post-date"

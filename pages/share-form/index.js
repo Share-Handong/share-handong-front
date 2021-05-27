@@ -1,27 +1,88 @@
 import "semantic-ui-css/semantic.min.css";
 import { Divider } from "semantic-ui-react";
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import DescriptionIcon from "@material-ui/icons/Description";
+<<<<<<< HEAD
 import axios from "axios";
+import { useRouter } from "next/router";
+=======
+>>>>>>> parent of 8f9fa74... feat: 마이페이지 진행중
 import Background from "../../src/component/Common/post_bg";
+import axios from 'axios'
 
 export default function ShareForm() {
-  const [category, setCategory] = useState("1");
+  const router = useRouter();
+  const { id, type } = router.query;
+  const [postData, setPostData] = useState({
+    userId: "",
+    id: "",
+    title: "",
+    body: "",
+    imgUrl: "",
+    uploadTime: "",
+    category: 1,
+  });
 
-  const handleChange = async (event) => {
-    event.preventDefault();
-    setCategory(event.target.value);
+  const [userData, setUserData] = useState({
+    name: "",
+    profileImg: "",
+  });
+
+  const titleInput = useRef();
+  const bodyInput = useRef();
+
+  const { title, body } = { title: postData.title, body: postData.body };
+  const { imgUrl, uploadTime, category } = {
+    imgUrl: "/images/product_image.png",
+    uploadTime: "2021.4.21",
+    category: postData.category,
+  };
+  const { name, profileImg } = userData;
+
+  function loadPostData(currentId) {
+    axios
+      .get(`http://jsonplaceholder.typicode.com/posts?id=${currentId}`)
+      .then((res) => {
+        setPostData(res.data[0]);
+      });
+  }
+
+  function loadUserData(currentId) {
+    axios
+      .get(`http://jsonplaceholder.typicode.com/users?id=${currentId}`)
+      .then((res) => {
+        setUserData({
+          name: res.data[0].username,
+          profileImg: "/images/profile_image.png",
+        });
+        // console.log(res.data[0]);
+      });
+  }
+
+  useEffect(() => {
+    if (type === "modify") {
+      loadPostData(id);
+      loadUserData(id);
+    }
+  }, []);
+
+  const handleChange = (e) => {
+    const { value, targetName } = e.target; // 우선 e.target 에서 name 과 value 를 추출
+    setPostData({
+      ...postData, // 기존의 input 객체를 복사한 뒤
+      [targetName]: value, // name 키를 가진 값을 value 로 설정
+    });
   };
 
-  const createPost = async (event) => {
+  const createPost = async(event) =>{
     event.preventDefault();
     axios
       .post(
         "http://localhost:3000/api",
         {
-          title: event.target.title.value,
-          desc: event.target.desc.value,
+          title,
+          desc: body,
           category: Number(category),
         },
         {
@@ -33,12 +94,12 @@ export default function ShareForm() {
       )
       .then((response) => {
         console.log(response.data);
-      })
-      .catch((response) => {
-        console.log("Error!");
+        router.replace("/share");
       });
+    // .catch((error) => {
+    //     console.log('Error!');
+    // });
   };
-
   return (
     <Background>
       <form action="/create_process" method="post" onSubmit={createPost}>
@@ -51,7 +112,7 @@ export default function ShareForm() {
           <div className="wrapper">
             <img
               className="img-form"
-              src="/images/product_image.png"
+              src={imgUrl}
               alt="logo"
               style={{
                 backgroundColor: "white",
@@ -104,6 +165,9 @@ export default function ShareForm() {
                 id="title-form"
                 name="title"
                 type="text"
+                onChange={handleChange}
+                ref={titleInput}
+                value={title}
                 style={{
                   backgroundColor: "white",
                   height: "92px",
@@ -125,7 +189,7 @@ export default function ShareForm() {
               <img
                 className="profile-img"
                 style={{ borderRadius: "50%", marginRight: "18px" }}
-                src="/images/profile_image.png"
+                src={profileImg}
                 alt="logo"
               />
               <span
@@ -135,8 +199,7 @@ export default function ShareForm() {
                   paddingRight: "36px",
                 }}
               >
-                {" "}
-                김민지
+                {name}
               </span>
               <span
                 className="post-date"
@@ -145,7 +208,7 @@ export default function ShareForm() {
                   color: "#727272",
                 }}
               >
-                2021.4.21
+                {uploadTime}
               </span>
             </div>
           </div>
@@ -170,8 +233,11 @@ export default function ShareForm() {
           </div>
           <textarea
             id="desc-form"
-            name="desc"
+            name="body"
             type="text"
+            value={postData.body}
+            ref={bodyInput}
+            onChange={handleChange}
             style={{
               backgroundColor: "white",
               height: "482px",
