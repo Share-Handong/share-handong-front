@@ -3,13 +3,9 @@ import { Divider } from "semantic-ui-react";
 import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import DescriptionIcon from "@material-ui/icons/Description";
-<<<<<<< HEAD
 import axios from "axios";
 import { useRouter } from "next/router";
-=======
->>>>>>> parent of 8f9fa74... feat: 마이페이지 진행중
 import Background from "../../src/component/Common/post_bg";
-import axios from 'axios'
 
 export default function ShareForm() {
   const router = useRouter();
@@ -75,7 +71,7 @@ export default function ShareForm() {
     });
   };
 
-  const createPost = async(event) =>{
+  const createPost = async (event) => {
     event.preventDefault();
     axios
       .post(
