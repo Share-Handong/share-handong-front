@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import IconButton from "@material-ui/core/IconButton";
 import PersonOutlinedIcon from "@material-ui/icons/PersonOutline";
 import Modal from "react-responsive-modal";
-import 'bootstrap/dist/css/bootstrap.css'
-
+import "bootstrap/dist/css/bootstrap.css";
 
 class button extends Component {
   constructor(props) {
@@ -45,7 +44,7 @@ class button extends Component {
             <span className="subtitle">No credit card needed</span>
             <form
               className="contact-form form-validate3"
-              novalidate="novalidate"
+              noValidate="novalidate"
             >
               <div className="form-group">
                 <input
@@ -55,7 +54,7 @@ class button extends Component {
                   id="name"
                   placeholder="First Name"
                   required=""
-                  autocomplete="off"
+                  autoComplete="off"
                   aria-required="true"
                 />
               </div>
@@ -66,7 +65,7 @@ class button extends Component {
                   name="email"
                   placeholder="E-mail"
                   required=""
-                  autocomplete="off"
+                  autoComplete="off"
                   aria-required="true"
                 />
               </div>
@@ -77,7 +76,7 @@ class button extends Component {
                   className="form-control"
                   placeholder="Password"
                   required=""
-                  autocomplete="off"
+                  autoComplete="off"
                   aria-required="true"
                 />
               </div>
@@ -99,7 +98,7 @@ class button extends Component {
             <span className="subtitle">Just fill in the form below</span>
             <form
               className="contact-form form-validate4"
-              novalidate="novalidate"
+              noValidate="novalidate"
             >
               <div className="form-group">
                 <input
@@ -108,7 +107,7 @@ class button extends Component {
                   name="email"
                   placeholder="E-mail"
                   required=""
-                  autocomplete="off"
+                  autoComplete="off"
                   aria-required="true"
                 />
               </div>
@@ -119,7 +118,7 @@ class button extends Component {
                   className="form-control"
                   placeholder="Password"
                   required=""
-                  autocomplete="off"
+                  autoComplete="off"
                   aria-required="true"
                 />
               </div>
