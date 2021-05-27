@@ -6,7 +6,6 @@ import CreateIcon from "@material-ui/icons/Create";
 import DescriptionIcon from "@material-ui/icons/Description";
 import Background from "../../src/component/Common/post_bg";
 import AuthService from "../../src/component/Common/AuthService";
-import PostService from "../../src/component/Common/PostService";
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -39,6 +38,7 @@ export default function Share() {
   },[]);
   
   function loadPostData(){
+   
     axios.get("http://jsonplaceholder.typicode.com/posts?id=2").then(res=> {
       setPostData(res.data[0]);
       console.log(res.data[0]);
