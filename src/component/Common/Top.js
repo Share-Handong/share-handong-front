@@ -133,12 +133,18 @@ export default function Top() {
       });
   };
 
+  const goMain = () => {
+    router.push("/main");
+  };
+
   return (
     <>
       <div className="top-wrap">
         <div className="sub">
           {/* 로고 */}
-          <img className="logo" src="/images/sh_logo.png" alt="logo" />
+          <div style={{cursor: "pointer"}} onClick={goMain}>
+            <img className="logo" src="/images/sh_logo.png" alt="logo" />
+          </div>
           {/* 검색 */}
           <Input
             style={{
