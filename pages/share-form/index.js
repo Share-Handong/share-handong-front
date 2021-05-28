@@ -6,6 +6,7 @@ import DescriptionIcon from "@material-ui/icons/Description";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Background from "../../src/component/Common/post_bg";
+import AuthService from "../../src/component/Common/AuthService";
 
 export default function ShareForm() {
   const router = useRouter();
@@ -73,6 +74,7 @@ export default function ShareForm() {
 
   const createPost = async (event) => {
     event.preventDefault();
+    AuthService.setupAxiosInterceptors();
     axios
       .post(
         "http://localhost:3000/api",
