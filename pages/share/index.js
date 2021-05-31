@@ -6,14 +6,16 @@ import CreateIcon from '@material-ui/icons/Create';
 import DescriptionIcon from '@material-ui/icons/Description';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import Background from '../../src/component/Common/post_bg';
 import AuthService from '../../src/component/Common/AuthService';
 
 export default function Share() {
     const checkLogin = AuthService.isUserLoggedIn === true; // 사용자- 포스팅 주인 id 비교 추가 예정
+    const router = useRouter();
+    const { id } = router.query;
+    const postId = id;
     const [postData, setPostData] = useState({
-        userId: '',
-        id: '',
         title: '',
         body: '',
         imgUrl: '',
@@ -35,15 +37,15 @@ export default function Share() {
     };
     const { name, profileImg } = userData;
 
-    function loadPostData() {
-        axios.get('http://jsonplaceholder.typicode.com/posts?id=2').then((res) => {
+    function loadPostData(currentId) {
+        axios.get(`http://127.0.0.1:8020/api/v1/share/item/${currentId}`).then((res) => {
             setPostData(res.data[0]);
             console.log(res.data[0]);
         });
     }
 
-    function loadUserData() {
-        axios.get('http://jsonplaceholder.typicode.com/users?id=2').then((res) => {
+    function loadUserData(currentId) {
+        axios.get(`http://jsonplaceholder.typicode.com/users?id=${currentId}`).then((res) => {
             setUserData({
                 name: res.data[0].username,
                 profileImg: '/images/profile_image.png',
@@ -52,8 +54,8 @@ export default function Share() {
         });
     }
     useEffect(() => {
-        loadPostData();
-        loadUserData();
+        loadPostData(postId);
+        loadUserData(postId);
         console.log(AuthService.getLoggedInUserId);
     }, []);
 
@@ -152,7 +154,7 @@ export default function Share() {
                             <Link
                                 href={{
                                     pathname: '/share-form',
-                                    query: { id: postData.id, type: 'modify' },
+                                    query: { id: postId, type: 'modify' },
                                 }}
                             >
                                 <button
