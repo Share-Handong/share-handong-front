@@ -32,7 +32,7 @@ export default function ShareForm() {
     const { name, profileImg } = userData;
 
     function loadPostData(currentId) {
-        axios.get(`http://jsonplaceholder.typicode.com/posts?id=${currentId}`).then((res) => {
+        axios.get(`http://127.0.0.1:8020/api/v1/share/item/${currentId}`).then((res) => {
             setPostData(res.data[0]);
         });
     }
@@ -67,7 +67,7 @@ export default function ShareForm() {
         event.preventDefault();
         axios
             .post(
-                'http://127.0.0.1:8020/api/v1/share/item',
+                `http://127.0.0.1:8020/api/v1/share/item/${postId}`,
                 {
                     title,
                     desc: body,
