@@ -24,7 +24,7 @@ export default function ShareForm() {
 
     const [userData, setUserData] = useState({
         // name: '',
-        profileImg: '/images/profile_image.png',
+        profileImg: '/images/temp_profile.png',
     });
 
     const { title, content, writer, imgUrl, category, createDate } = postData;
@@ -145,7 +145,7 @@ export default function ShareForm() {
                     <div className="wrapper">
                         <img
                             className="img-form"
-                            src={imgUrl}
+                            src="{imgUrl}"
                             alt="logo"
                             style={{
                                 backgroundColor: 'white',
@@ -217,11 +217,17 @@ export default function ShareForm() {
                                 display: 'inline-flex',
                                 flexDirection: 'row',
                                 alignItems: 'center',
+                                objectFit: 'contain',
                             }}
                         >
                             <img
                                 className="profile-img"
-                                style={{ borderRadius: '50%', marginRight: '18px' }}
+                                style={{
+                                    width: 50,
+                                    height: 50,
+                                    borderRadius: '50%',
+                                    marginRight: '18px',
+                                }}
                                 src={profileImg}
                                 alt="logo"
                             />
