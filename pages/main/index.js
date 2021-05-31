@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
 import Head from 'next/head';
 import Grid from '@material-ui/core/Grid';
-import axios from 'axios';
 import Fab from '@material-ui/core/Fab';
 import EditIcon from '@material-ui/icons/Edit';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
@@ -85,7 +83,12 @@ export default function Main() {
             </Grid>
 
             <ThemeProvider theme={fabTheme}>
-                <Link href="/share/share_form">
+                <Link
+                    href={{
+                        pathname: '/share-form',
+                        query: { type: 'create' },
+                    }}
+                >
                     <Fab color="secondary" aria-label="add" className={classes.fab}>
                         <EditIcon />
                     </Fab>

@@ -10,13 +10,15 @@ import Background from '../../src/component/Common/post_bg';
 export default function ShareForm() {
     const router = useRouter();
     const { id, type } = router.query;
-    const [postData, setPostData] = useState({
+    const [infoData, setInfoData] = useState({
         userId: '',
-        id: '',
+        postId: id,
+        uploadTime: '2021.4.21',
+    });
+    const [postData, setPostData] = useState({
         title: '',
         body: '',
-        imgUrl: '',
-        uploadTime: '',
+        imgUrl: '/images/product_image.png',
         category: 1,
     });
 
@@ -25,19 +27,12 @@ export default function ShareForm() {
         profileImg: '',
     });
 
-    const titleInput = useRef();
-    const bodyInput = useRef();
-
-    const { title, body } = { title: postData.title, body: postData.body };
-    const { imgUrl, uploadTime, category } = {
-        imgUrl: '/images/product_image.png',
-        uploadTime: '2021.4.21',
-        category: postData.category,
-    };
+    const { title, body, imgUrl, category } = postData;
+    const { userId, postId, uploadTime } = infoData;
     const { name, profileImg } = userData;
 
     function loadPostData(currentId) {
-        axios.get(`http://jsonplaceholder.typicode.com/posts?id=${currentId}`).then((res) => {
+        axios.get(`http://127.0.0.1:8020/api/v1/share/item/${currentId}`).then((res) => {
             setPostData(res.data[0]);
         });
     }
@@ -48,30 +43,31 @@ export default function ShareForm() {
                 name: res.data[0].username,
                 profileImg: '/images/profile_image.png',
             });
-            // console.log(res.data[0]);
         });
     }
 
     useEffect(() => {
         if (type === 'modify') {
-            loadPostData(id);
-            loadUserData(id);
+            loadPostData(postId);
+            loadUserData(postId);
         }
     }, []);
 
-    const handleChange = (e) => {
-        const { value, targetName } = e.target; // 우선 e.target 에서 name 과 value 를 추출
-        setPostData({
+    function handleChange(event) {
+        const targetName = event.target.name; // 우선 e.target 에서 name 과 value 를 추출
+        const targetValue = event.target.value;
+        const nextInputs = {
             ...postData, // 기존의 input 객체를 복사한 뒤
-            [targetName]: value, // name 키를 가진 값을 value 로 설정
-        });
-    };
+            [targetName]: targetValue, // name 키를 가진 값을 value 로 설정
+        };
+        setPostData(nextInputs);
+    }
 
-    const createPost = async (event) => {
+    const modifyPost = async (event) => {
         event.preventDefault();
         axios
             .post(
-                'http://localhost:3000/api',
+                `http://127.0.0.1:8020/api/v1/share/item/${postId}`,
                 {
                     title,
                     desc: body,
@@ -92,9 +88,40 @@ export default function ShareForm() {
         //     console.log('Error!');
         // });
     };
+
+    const createPost = async (event) => {
+        event.preventDefault();
+        axios
+            .post(
+                'http://127.0.0.1:8020/api/v1/share/item',
+                {
+                    title,
+                    desc: body,
+                    category: Number(category),
+                },
+                {
+                    headers: {
+                        'Content-type': 'application/json',
+                        Accept: 'application/json',
+                    },
+                },
+            )
+            .then((response) => {
+                console.log(response.data);
+                router.replace('/share');
+            });
+        // .catch((error) => {
+        //     console.log('Error!');
+        // });
+    };
+
     return (
         <Background>
-            <form action="/create_process" method="post" onSubmit={createPost}>
+            <form
+                action="/create_process"
+                method="post"
+                onSubmit={type === 'modify' ? modifyPost : createPost}
+            >
                 <div
                     className="section-top"
                     style={{
@@ -130,6 +157,7 @@ export default function ShareForm() {
                         >
                             <select
                                 id="category"
+                                name="category"
                                 onChange={handleChange}
                                 value={category}
                                 style={{
@@ -158,7 +186,6 @@ export default function ShareForm() {
                                 name="title"
                                 type="text"
                                 onChange={handleChange}
-                                ref={titleInput}
                                 value={title}
                                 style={{
                                     backgroundColor: 'white',
@@ -224,8 +251,7 @@ export default function ShareForm() {
                         id="desc-form"
                         name="body"
                         type="text"
-                        value={postData.body}
-                        ref={bodyInput}
+                        value={body}
                         onChange={handleChange}
                         style={{
                             backgroundColor: 'white',

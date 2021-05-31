@@ -9,6 +9,7 @@ import { Row, Item } from '@mui-treasury/components/flex';
 import { Info, InfoSubtitle, InfoTitle } from '@mui-treasury/components/info';
 import { useNewsInfoStyles } from '@mui-treasury/styles/info/news';
 import { useCoverCardMediaStyles } from '@mui-treasury/styles/cardMedia/cover';
+import Link from 'next/link';
 
 const useStyles = makeStyles(() => ({
     card: {
@@ -110,28 +111,42 @@ const ShareCard = React.memo(function MyCard({ cardInfo }) {
     const mediaStyles = useCoverCardMediaStyles();
     return (
         <>
-            <Card className={styles.card}>
-                <Box className={styles.main} minHeight={300} position="relative">
-                    <CardMedia classes={mediaStyles} image={cardInfo.thumbnail} />
-                    <div className={styles.content}>
-                        <div className={styles.tag}>{cardInfo.catego}</div>
-                        <Typography variant="h2" className={styles.title}>
-                            {cardInfo.title}
-                        </Typography>
-                    </div>
-                </Box>
-                <Row className={styles.author} m={0} p={3} pt={2} gap={2} bgcolor="common.white">
-                    <Item>
-                        <Avatar className={styles.avatar} src={cardInfo.profileImage} />
-                    </Item>
-                    <Info position="middle" useStyles={useNewsInfoStyles}>
-                        <InfoTitle>{cardInfo.writer}</InfoTitle>
-                        <InfoSubtitle>{cardInfo.modifiedDate}</InfoSubtitle>
-                    </Info>
-                </Row>
-                <div className={styles.shadow} />
-                <div className={`${styles.shadow} ${styles.shadow2}`} />
-            </Card>
+            <Link
+                href={{
+                    pathname: '/share',
+                    query: { id: cardInfo.idx },
+                }}
+            >
+                <Card className={styles.card}>
+                    <Box className={styles.main} minHeight={300} position="relative">
+                        <CardMedia classes={mediaStyles} image={cardInfo.thumbnail} />
+                        <div className={styles.content}>
+                            <div className={styles.tag}>{cardInfo.catego}</div>
+                            <Typography variant="h2" className={styles.title}>
+                                {cardInfo.title}
+                            </Typography>
+                        </div>
+                    </Box>
+                    <Row
+                        className={styles.author}
+                        m={0}
+                        p={3}
+                        pt={2}
+                        gap={2}
+                        bgcolor="common.white"
+                    >
+                        <Item>
+                            <Avatar className={styles.avatar} src={cardInfo.profileImage} />
+                        </Item>
+                        <Info position="middle" useStyles={useNewsInfoStyles}>
+                            <InfoTitle>{cardInfo.writer}</InfoTitle>
+                            <InfoSubtitle>{cardInfo.modifiedDate}</InfoSubtitle>
+                        </Info>
+                    </Row>
+                    <div className={styles.shadow} />
+                    <div className={`${styles.shadow} ${styles.shadow2}`} />
+                </Card>
+            </Link>
         </>
     );
 });

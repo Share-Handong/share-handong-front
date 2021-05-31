@@ -120,11 +120,13 @@ class AuthService {
         return false;
     };
 
-    getLoggedInUserName = () => {
+    getLoggedInUserInfo = () => {
         // let user = sessionStorage.getItem('authenticatedUser')
-        const user = localStorage.getItem('authenticatedUser');
-        if (user === null) return '';
-        return user;
+
+        const email = localStorage.getItem('authenticatedUser');
+        const name = localStorage.getItem('authenticatedUserName');
+        if (email === null) return '';
+        return { email, name };
     };
 }
 

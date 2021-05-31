@@ -8,7 +8,6 @@ import Dialog from "@material-ui/core/Dialog";
 import GoogleLogin from "react-google-login";
 import { GoogleIcon } from "./icons";
 
-
 const responseGoogle = (response) => {
   console.log(response);
 };
