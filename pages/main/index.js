@@ -4,37 +4,39 @@ import Fab from '@material-ui/core/Fab';
 import EditIcon from '@material-ui/icons/Edit';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Link from 'next/link';
-import ShareCard from './ShareCard';
+import axios from 'axios';
+import React, { useState } from 'react';
+import ShareCard from './components/ShareCard';
 
-const sharePosts = [
-    {
-        idx: 0,
-        writer: '김민지학부생',
-        profileImage: '/images/profile_image.png',
-        thumbnail: '/images/product_image.png',
-        catego: '나눔하기',
-        title: '오토바이 1000cc 무료 나눔해요 :)',
-        modifiedDate: '5분 전',
-    },
-    {
-        idx: 1,
-        writer: '김민지학부생',
-        profileImage: '/images/profile_image.png',
-        thumbnail: '/images/product_image.png',
-        catego: '나눔하기',
-        title: '오토바이 1000cc 무료 나눔해요 :)',
-        modifiedDate: '5분 전',
-    },
-    {
-        idx: 2,
-        writer: '김민지학부생',
-        profileImage: '/images/profile_image.png',
-        thumbnail: '/images/product_image.png',
-        catego: '나눔하기',
-        title: '오토바이 1000cc 무료 나눔해요 :)',
-        modifiedDate: '5분 전',
-    },
-];
+// const sharePosts = [
+//     {
+//         idx: 0,
+//         writer: '김민지학부생',
+//         profileImage: '/images/profile_image.png',
+//         thumbnail: '/images/product_image.png',
+//         catego: '나눔하기',
+//         title: '오토바이 1000cc 무료 나눔해요 :)',
+//         modifiedDate: '5분 전',
+//     },
+//     {
+//         idx: 1,
+//         writer: '김민지학부생',
+//         profileImage: '/images/profile_image.png',
+//         thumbnail: '/images/product_image.png',
+//         catego: '나눔하기',
+//         title: '오토바이 1000cc 무료 나눔해요 :)',
+//         modifiedDate: '5분 전',
+//     },
+//     {
+//         idx: 2,
+//         writer: '김민지학부생',
+//         profileImage: '/images/profile_image.png',
+//         thumbnail: '/images/product_image.png',
+//         catego: '나눔하기',
+//         title: '오토바이 1000cc 무료 나눔해요 :)',
+//         modifiedDate: '5분 전',
+//     },
+// ];
 
 const fabTheme = createMuiTheme({
     palette: {
@@ -54,19 +56,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Main() {
     const classes = useStyles();
-    // const [sharePosts, setSharePosts] = useState([]);
+    const [sharePosts, setSharePosts] = useState([]);
 
-    // const getShareList = () => {
-    //     try {
-    //         axios.get('http://127.0.0.1:8020/api/v1/share');
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // };
+    const getShareList = () => {
+        try {
+            axios.get('http://127.0.0.1:8020/api/v1/myshare/item');
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-    // getShareList.then((res) => {
-    //     setSharePosts(res.data);
-    // });
+    getShareList.then((res) => {
+        setSharePosts(res.data);
+    });
 
     return (
         <div>
