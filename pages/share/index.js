@@ -17,25 +17,20 @@ export default function Share() {
     const postId = id;
     const [postData, setPostData] = useState({
         title: '',
-        body: '',
-        imgUrl: '',
-        uploadTime: '',
+        content: '',
+        writer: '',
+        imgUrl: '/images/product_image.png',
         category: 1,
+        createDate: '2021.4.21',
     });
 
     const [userData, setUserData] = useState({
-        name: '',
-        profileImg: '',
+        // name: '',
+        profileImg: '/images/temp_profile.png',
     });
+    const { title, content, writer, imgUrl, category, createDate } = postData;
 
-    const { title, body, imgUrl, uploadTime, category } = {
-        title: postData.title,
-        body: postData.body,
-        imgUrl: '/images/product_image.png',
-        uploadTime: '2021.4.21',
-        category: 2,
-    };
-    const { name, profileImg } = userData;
+    const { profileImg } = userData;
 
     function loadPostData(currentId) {
         axios.get(`http://127.0.0.1:8020/api/v1/share/item/${currentId}`).then((res) => {
@@ -44,18 +39,30 @@ export default function Share() {
         });
     }
 
-    function loadUserData(currentId) {
-        axios.get(`http://jsonplaceholder.typicode.com/users?id=${currentId}`).then((res) => {
-            setUserData({
-                name: res.data[0].username,
-                profileImg: '/images/profile_image.png',
-            });
-            console.log(res.data[0]);
-        });
+    // function loadUserData(currentId) {
+    //     axios.get(`http://jsonplaceholder.typicode.com/users?id=${currentId}`).then((res) => {
+    //         setUserData({
+    //             profileImg: '/images/profile_image.png',
+    //         });
+    //         console.log(res.data[0]);
+    //     });
+    // }
+
+    function getDate() {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth() + 1;
+        const date = today.getDate();
+        const currentTime = `${year}.${month}.${date}`;
+        console.log(currentTime);
+        return currentTime;
     }
+
     useEffect(() => {
+        const currentTime = getDate();
+        setPostData({ createDate: currentTime });
         loadPostData(postId);
-        loadUserData(postId);
+        // loadUserData(postId);
         console.log(AuthService.getLoggedInUserId);
     }, []);
 
@@ -107,7 +114,12 @@ export default function Share() {
                     >
                         <img
                             className="profile-img"
-                            style={{ borderRadius: '50%', marginRight: '18px' }}
+                            style={{
+                                width: 50,
+                                height: 50,
+                                borderRadius: '50%',
+                                marginRight: '18px',
+                            }}
                             src={profileImg}
                             alt="logo"
                         />
@@ -118,7 +130,7 @@ export default function Share() {
                                 paddingRight: '36px',
                             }}
                         >
-                            {name}
+                            {writer}
                         </span>
                         <span
                             className="post-date"
@@ -127,7 +139,7 @@ export default function Share() {
                                 color: '#727272',
                             }}
                         >
-                            {uploadTime}
+                            {createDate}
                         </span>
                     </div>
                     {!checkLogin ? (
@@ -239,7 +251,7 @@ export default function Share() {
                     className="desc"
                     style={{ fontSize: '30px', color: '#1A1818', paddingBottom: '100px' }}
                 >
-                    {body}
+                    {content}
                 </div>
             </div>
             <Divider />
@@ -329,7 +341,7 @@ export default function Share() {
                                 paddingRight: '36px',
                             }}
                         >
-                            {name}
+                            {writer}
                         </span>
                         <span
                             className="post-date"
