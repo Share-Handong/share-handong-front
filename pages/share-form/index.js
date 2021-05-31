@@ -11,25 +11,25 @@ export default function ShareForm() {
     const router = useRouter();
     const { id, type } = router.query;
     const [infoData, setInfoData] = useState({
-        userId: '',
         postId: id,
-        uploadTime: '2021.4.21',
     });
     const [postData, setPostData] = useState({
         title: '',
-        body: '',
+        content: '',
+        writer: '',
         imgUrl: '/images/product_image.png',
         category: 1,
+        createDate: '2021.4.21',
     });
 
     const [userData, setUserData] = useState({
-        name: '',
-        profileImg: '',
+        // name: '',
+        profileImg: '/images/profile_image.png',
     });
 
-    const { title, body, imgUrl, category } = postData;
-    const { userId, postId, uploadTime } = infoData;
-    const { name, profileImg } = userData;
+    const { title, content, writer, imgUrl, category, createDate } = postData;
+    const { postId } = infoData;
+    const { profileImg } = userData;
 
     function loadPostData(currentId) {
         axios.get(`http://127.0.0.1:8020/api/v1/share/item/${currentId}`).then((res) => {
@@ -37,19 +37,31 @@ export default function ShareForm() {
         });
     }
 
-    function loadUserData(currentId) {
-        axios.get(`http://jsonplaceholder.typicode.com/users?id=${currentId}`).then((res) => {
-            setUserData({
-                name: res.data[0].username,
-                profileImg: '/images/profile_image.png',
-            });
-        });
+    // function loadUserData(currentId) {
+    //     axios.get(`http://jsonplaceholder.typicode.com/users?id=${currentId}`).then((res) => {
+    //         setUserData({
+    //             name: res.data[0].username,
+    //             profileImg: '/images/profile_image.png',
+    //         });
+    //     });
+    // }
+
+    function getDate() {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth() + 1;
+        const date = today.getDate();
+        const currentTime = `${year}.${month}.${date}`;
+        console.log(currentTime);
+        return currentTime;
     }
 
     useEffect(() => {
+        const currentTime = getDate();
+        setPostData({ createDate: currentTime });
         if (type === 'modify') {
             loadPostData(postId);
-            loadUserData(postId);
+            // loadUserData(postId);
         }
     }, []);
 
@@ -70,7 +82,7 @@ export default function ShareForm() {
                 `http://127.0.0.1:8020/api/v1/share/item/${postId}`,
                 {
                     title,
-                    desc: body,
+                    content,
                     category: Number(category),
                 },
                 {
@@ -96,8 +108,10 @@ export default function ShareForm() {
                 'http://127.0.0.1:8020/api/v1/share/item',
                 {
                     title,
-                    desc: body,
+                    content,
                     category: Number(category),
+                    writer,
+                    createDate,
                 },
                 {
                     headers: {
@@ -218,7 +232,7 @@ export default function ShareForm() {
                                     paddingRight: '36px',
                                 }}
                             >
-                                {name}
+                                {writer}
                             </span>
                             <span
                                 className="post-date"
@@ -227,7 +241,7 @@ export default function ShareForm() {
                                     color: '#727272',
                                 }}
                             >
-                                {uploadTime}
+                                {createDate}
                             </span>
                         </div>
                     </div>
@@ -249,9 +263,9 @@ export default function ShareForm() {
                     </div>
                     <textarea
                         id="desc-form"
-                        name="body"
+                        name="content"
                         type="text"
-                        value={body}
+                        value={content}
                         onChange={handleChange}
                         style={{
                             backgroundColor: 'white',
