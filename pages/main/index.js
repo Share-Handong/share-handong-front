@@ -83,7 +83,12 @@ export default function Main() {
             </Grid>
 
             <ThemeProvider theme={fabTheme}>
-                <Link href="/share/share_form">
+                <Link
+                    href={{
+                        pathname: '/share-form',
+                        query: { type: 'create' },
+                    }}
+                >
                     <Fab color="secondary" aria-label="add" className={classes.fab}>
                         <EditIcon />
                     </Fab>
