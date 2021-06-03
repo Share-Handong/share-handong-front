@@ -1,10 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import ReplyIcon from '@material-ui/icons/Reply';
 
-export default function CommentBox() {
+export default function CommentBox(props) {
+    const [commentData, setCommentData] = useState({
+        writer: '',
+        c_date: '',
+        content: '',
+    });
+
+    const { writer, cDate, content } = commentData;
+
+    function loadCommentData(data) {
+        setCommentData(data);
+    }
+    useEffect(() => {
+        loadCommentData(props.data);
+    }, []);
+
     return (
         <div className="comment-box">
-            <p style={{ fontSize: '30px' }}>제꺼도 같이 해주실 분 ^^..</p>
+            <p style={{ fontSize: '30px' }}>{content}</p>
             <div
                 className="wrapper"
                 style={{
@@ -27,7 +42,7 @@ export default function CommentBox() {
                         paddingRight: '36px',
                     }}
                 >
-                    {/* {writer} */}
+                    {writer}
                 </span>
                 <span
                     className="post-date"
@@ -36,7 +51,7 @@ export default function CommentBox() {
                         color: '#727272',
                     }}
                 >
-                    2021.4.21
+                    {cDate}
                 </span>
                 <button
                     className="reply-btn"
