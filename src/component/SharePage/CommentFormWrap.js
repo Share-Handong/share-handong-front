@@ -75,7 +75,7 @@ export default function CommentFormWrap(props) {
                     type="submit"
                     style={{
                         backgroundColor: 'white',
-                        height: '67px',
+                        height: '60px',
                         width: '166px',
                         fontSize: '25px',
                         color: '#1A1818',
