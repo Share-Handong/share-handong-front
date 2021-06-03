@@ -109,7 +109,9 @@ const useStyles = makeStyles(() => ({
 const ShareCard = React.memo(function MyCard({ cardInfo }) {
     const styles = useStyles();
     const mediaStyles = useCoverCardMediaStyles();
-    console.log(cardInfo);
+    const createdArray = cardInfo.createdAt.split('T');
+    const date = createdArray[0].split('-');
+    const time = createdArray[1].split(':');
 
     return (
         <>
@@ -144,7 +146,9 @@ const ShareCard = React.memo(function MyCard({ cardInfo }) {
                         </Item>
                         <Info position="middle" useStyles={useNewsInfoStyles}>
                             <InfoTitle>{cardInfo.writer}</InfoTitle>
-                            <InfoSubtitle>{cardInfo.createdAt}</InfoSubtitle>
+                            <InfoSubtitle>
+                                {`${date[1]}월 ${date[2]}일 ${time[0]}:${time[1]}`}
+                            </InfoSubtitle>
                         </Info>
                     </Row>
                     <div className={styles.shadow} />
