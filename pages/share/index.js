@@ -9,7 +9,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import Background from '../../src/component/Common/post_bg';
 import AuthService from '../../src/component/Common/AuthService';
-import CommentBox from '../../src/component/SharePage/CommentBox';
+import CommentList from '../../src/component/SharePage/CommentList';
 import CommentFormWrap from '../../src/component/SharePage/CommentFormWrap';
 
 export default function Share() {
@@ -288,7 +288,7 @@ export default function Share() {
                     <span style={{ color: '#FF4B4B' }}>1</span>
                 </div>
                 <CommentFormWrap itemId={postId} />
-                <CommentBox />
+                <CommentList itemId={postId} />
                 <Divider />
             </div>
         </Background>
