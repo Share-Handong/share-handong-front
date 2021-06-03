@@ -2,18 +2,26 @@ import React, { useEffect, useState } from 'react';
 import CreateIcon from '@material-ui/icons/Create';
 import axios from 'axios';
 
-export default function CommentFormWrap() {
+export default function CommentFormWrap(props) {
     const [commentData, setCommentData] = useState({
         content: '',
     });
-
+    const [postId, setPostId] = useState('');
     const content = commentData;
 
-    const createComment = async (event) => {
+    function loadPostId(itemId) {
+        setPostId(itemId);
+    }
+    useEffect(() => {
+        loadPostId(props.itemId);
+    }, []);
+
+    const createComment = async (event, itemId) => {
+        console.log(itemId);
         event.preventDefault();
         axios
             .post(
-                'http://127.0.0.1:8020/api/v1/share/item',
+                `http://127.0.0.1:8020/api/v1/comment/item/${itemId}`,
                 {
                     content,
                 },
@@ -42,41 +50,48 @@ export default function CommentFormWrap() {
                 paddingLeft: '8px',
             }}
         >
-            <input
-                id="comment-form"
-                name="comment"
-                type="text"
-                placeholder="댓글을 입력하세요"
-                style={{
-                    fontSize: '30px',
-                    backgroundColor: 'transparent',
-                    border: 'transparent',
-                    width: '952px',
-                    height: '70px',
-                    borderRight: '0.8px solid #767676',
-                }}
-            />
-            <button
-                className="comment-btn"
-                type="submit"
-                style={{
-                    backgroundColor: 'white',
-                    height: '67px',
-                    width: '166px',
-                    fontSize: '25px',
-                    color: '#1A1818',
-                    border: 'transparent',
-                    justifySelf: 'end',
-                    paddingRight: '36px',
-                    textAlign: 'center',
-                    overflow: 'hidden',
-                }}
+            <form
+                action="/create_process"
+                method="post"
+                onSubmit={(event) => createComment(event, postId)}
             >
-                <span className="icon" style={{ paddingLeft: '8px', paddingRight: '8px' }}>
-                    <CreateIcon />
-                </span>
-                등록
-            </button>
+                <input
+                    id="comment-form"
+                    name="comment"
+                    type="text"
+                    placeholder="댓글을 입력하세요"
+                    style={{
+                        fontSize: '30px',
+                        backgroundColor: 'transparent',
+                        border: 'transparent',
+                        width: '952px',
+                        height: '70px',
+                        borderRight: '0.8px solid #767676',
+                    }}
+                />
+
+                <button
+                    className="comment-btn"
+                    type="submit"
+                    style={{
+                        backgroundColor: 'white',
+                        height: '67px',
+                        width: '166px',
+                        fontSize: '25px',
+                        color: '#1A1818',
+                        border: 'transparent',
+                        justifySelf: 'end',
+                        paddingRight: '36px',
+                        textAlign: 'center',
+                        overflow: 'hidden',
+                    }}
+                >
+                    <span className="icon" style={{ paddingLeft: '8px', paddingRight: '8px' }}>
+                        <CreateIcon />
+                    </span>
+                    등록
+                </button>
+            </form>
         </div>
     );
 }
