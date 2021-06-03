@@ -47,7 +47,6 @@ export default function Share() {
         axios
             .delete(`http://127.0.0.1:8020/api/v1/share/item/${currentId}`)
             .then(function (response) {
-                // handle success
                 console.log(response);
             })
             .catch(function (error) {
@@ -178,7 +177,9 @@ export default function Share() {
                                     textAlign: 'center',
                                 }}
                             >
-                                삭제하기
+                                <Link href="/main">
+                                    <span style={{ color: 'black !important' }}>삭제하기</span>
+                                </Link>
                             </button>
                             <Link
                                 href={{
