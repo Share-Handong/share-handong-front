@@ -109,6 +109,8 @@ const useStyles = makeStyles(() => ({
 const ShareCard = React.memo(function MyCard({ cardInfo }) {
     const styles = useStyles();
     const mediaStyles = useCoverCardMediaStyles();
+    console.log(cardInfo);
+
     return (
         <>
             <Link
@@ -121,7 +123,9 @@ const ShareCard = React.memo(function MyCard({ cardInfo }) {
                     <Box className={styles.main} minHeight={300} position="relative">
                         <CardMedia classes={mediaStyles} image={cardInfo.thumbnail} />
                         <div className={styles.content}>
-                            <div className={styles.tag}>{cardInfo.catego}</div>
+                            <div className={styles.tag}>
+                                {cardInfo.catego === 1 ? '나눔받기' : '나눔하기'}
+                            </div>
                             <Typography variant="h2" className={styles.title}>
                                 {cardInfo.title}
                             </Typography>
@@ -140,7 +144,7 @@ const ShareCard = React.memo(function MyCard({ cardInfo }) {
                         </Item>
                         <Info position="middle" useStyles={useNewsInfoStyles}>
                             <InfoTitle>{cardInfo.writer}</InfoTitle>
-                            <InfoSubtitle>{cardInfo.modifiedDate}</InfoSubtitle>
+                            <InfoSubtitle>{cardInfo.createdAt}</InfoSubtitle>
                         </Info>
                     </Row>
                     <div className={styles.shadow} />
