@@ -9,6 +9,8 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import Background from '../../src/component/Common/post_bg';
 import AuthService from '../../src/component/Common/AuthService';
+import CommentBox from '../../src/component/SharePage/CommentBox';
+import CommentFormWrap from '../../src/component/SharePage/CommentFormWrap';
 
 export default function Share() {
     const checkLogin = AuthService.isUserLoggedIn === true; // 사용자- 포스팅 주인 id 비교 추가 예정
@@ -40,6 +42,19 @@ export default function Share() {
         });
     }
 
+    function deletePostData(event, currentId) {
+        event.preventDefault();
+        axios
+            .delete(`http://127.0.0.1:8020/api/v1/share/item/${currentId}`)
+            .then(function (response) {
+                // handle success
+                console.log(response);
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            });
+    }
     // function loadUserData(currentId) {
     //     axios.get(`http://jsonplaceholder.typicode.com/users?id=${currentId}`).then((res) => {
     //         setUserData({
@@ -146,6 +161,7 @@ export default function Share() {
                     {!checkLogin ? (
                         <div className="wrapper" style={{ marginTop: '54px' }}>
                             <button
+                                onClick={(e) => deletePostData(e, postId)}
                                 className="delete-btn"
                                 type="submit"
                                 style={{
@@ -270,105 +286,8 @@ export default function Share() {
                     <span style={{ color: '#1A1818', paddingRight: '8px' }}>댓글</span>
                     <span style={{ color: '#FF4B4B' }}>1</span>
                 </div>
-                <div
-                    className="comment-form-box"
-                    style={{
-                        height: '70px',
-                        width: '1129px',
-                        border: '1px  solid #7A7A7A',
-                        backgroundColor: 'white',
-                        borderWidth: '1px',
-                        marginBottom: '60px',
-                        paddingLeft: '8px',
-                    }}
-                >
-                    <input
-                        id="comment-form"
-                        name="comment"
-                        type="text"
-                        placeholder="댓글을 입력하세요"
-                        style={{
-                            fontSize: '30px',
-                            backgroundColor: 'transparent',
-                            border: 'transparent',
-                            width: '952px',
-                            height: '70px',
-                            borderRight: '0.8px solid #767676',
-                        }}
-                    />
-                    <button
-                        className="comment-btn"
-                        type="submit"
-                        style={{
-                            backgroundColor: 'white',
-                            height: '67px',
-                            width: '166px',
-                            fontSize: '25px',
-                            color: '#1A1818',
-                            border: 'transparent',
-                            justifySelf: 'end',
-                            paddingRight: '36px',
-                            textAlign: 'center',
-                            overflow: 'hidden',
-                        }}
-                    >
-                        <span className="icon" style={{ paddingLeft: '8px', paddingRight: '8px' }}>
-                            <CreateIcon />
-                        </span>
-                        등록
-                    </button>
-                </div>
-                <div className="comment-box">
-                    <p style={{ fontSize: '30px' }}>제꺼도 같이 해주실 분 ^^..</p>
-                    <div
-                        className="wrapper"
-                        style={{
-                            display: 'inline-flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            width: '1129px',
-                        }}
-                    >
-                        <img
-                            className="profile-img"
-                            style={{ borderRadius: '50%', marginRight: '18px' }}
-                            src="/images/profile_image.png"
-                            alt="logo"
-                        />
-                        <span
-                            className="profile-name"
-                            style={{
-                                fontSize: '25px',
-                                paddingRight: '36px',
-                            }}
-                        >
-                            {writer}
-                        </span>
-                        <span
-                            className="post-date"
-                            style={{
-                                fontSize: '25px',
-                                color: '#727272',
-                            }}
-                        >
-                            2021.4.21
-                        </span>
-                        <button
-                            className="reply-btn"
-                            type="submit"
-                            style={{
-                                backgroundColor: 'white',
-                                border: 'none',
-                                fontSize: '25px',
-                                color: '#1A1818',
-                                marginLeft: '56px',
-                            }}
-                        >
-                            {' '}
-                            <ReplyIcon /> <span>댓글달기</span>
-                        </button>
-                    </div>
-                </div>
+                <CommentFormWrap />
+                <CommentBox />
                 <Divider />
             </div>
         </Background>
