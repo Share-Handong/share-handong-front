@@ -20,6 +20,11 @@ class AuthService {
                 .then((res) => {
                     console.log(res);
                     localStorage.setItem('token', res.headers.refresh_token);
+                    if (!localStorage.getItem('authenticatedUser')) {
+                        localStorage.setItem('authenticatedUser', reEmail);
+                        localStorage.setItem('authenticatedUserId', rePw);
+                        localStorage.setItem('authenticatedUserName', reName);
+                    }
                 });
             // 토큰 refresh
             console.log('refresh!!');
