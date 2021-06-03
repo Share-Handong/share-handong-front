@@ -2,6 +2,8 @@ import { Input } from 'semantic-ui-react';
 import css from 'styled-jsx/css';
 import { IconButton } from '@material-ui/core';
 import { useRouter } from 'next/router';
+import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 
 import React from 'react';
 import Button from '@material-ui/core/Button';
@@ -11,6 +13,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import PersonOutlinedIcon from '@material-ui/icons/PersonOutline';
 import NotificationsOutlinedIcon from '@material-ui/icons/NotificationsOutlined';
 import GoogleLogin from 'react-google-login';
+import Typography from '@material-ui/core/Typography';
 import AuthService from './AuthService';
 
 const style = css`
@@ -76,7 +79,23 @@ const style = css`
 //   }
 // }
 
+const useStyles = makeStyles({
+    button: {
+        width: 300,
+        height: 50,
+    },
+});
+
+const buttonTheme = createMuiTheme({
+    palette: {
+        secondary: {
+            main: '#F85757',
+        },
+    },
+});
+
 export default function Top() {
+    const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const router = useRouter();
 
@@ -174,20 +193,39 @@ export default function Top() {
                     <IconButton aria-label="user-login" size="medium" onClick={handleClickOpen}>
                         <PersonOutlinedIcon />
                     </IconButton>
-                    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                        <DialogTitle id="form-dialog-title">Share Handong 로그인</DialogTitle>
+                    <Dialog className={classes.dialog} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                    <DialogContent>
+                            <Box height={40} />
+                        </DialogContent>
+                        <DialogTitle id="form-dialog-title">
+                            <img src="/images/sh_logo.png" width="300"/>
+                        </DialogTitle>
+                        <DialogContent>
+                            <Typography gutterBottom variant="h4" component="h2" align="center">
+                                로그인
+                            </Typography>
+                        </DialogContent>
+                        <DialogContent>
+                            <Box height={40} />
+                        </DialogContent>
                         <DialogContent>
                             <GoogleLogin
                                 clientId="276879982468-ros409es0l58ds23fq9v08thamqccbab.apps.googleusercontent.com"
                                 render={(renderProps) => (
-                                    <Button
-                                        onClick={renderProps.onClick}
-                                        disabled={renderProps.disabled}
-                                        variant="contained"
-                                        size="large"
-                                    >
-                                        구글 계정으로 로그인
-                                    </Button>
+                                    <ThemeProvider theme={buttonTheme}>
+                                        <Button
+                                            className={classes.button}
+                                            onClick={renderProps.onClick}
+                                            disabled={renderProps.disabled}
+                                            variant="contained"
+                                            size="large"
+                                            color="secondary"
+                                        >
+                                            <Typography gutterBottom variant="h6" component="h2">
+                                                Sign In with Google
+                                            </Typography>
+                                        </Button>
+                                    </ThemeProvider>
                                 )}
                                 buttonText="Login"
                                 onSuccess={responseGoogle}
@@ -197,13 +235,18 @@ export default function Top() {
                         </DialogContent>
                         <DialogContent>
                             <Button
+                                className={classes.button}
                                 variant="contained"
                                 onClick={handleClose}
-                                color="primary"
                                 size="large"
                             >
-                                로그인 없이 시작하기
+                                <Typography gutterBottom variant="h6" component="h2">
+                                    둘러보기
+                                </Typography>
                             </Button>
+                        </DialogContent>
+                        <DialogContent>
+                            <Box height={40} />
                         </DialogContent>
                     </Dialog>
                 </div>
