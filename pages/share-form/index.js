@@ -6,6 +6,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import Background from '../../src/component/Common/post_bg';
+import AuthService from '../../src/component/Common/AuthService';
 
 export default function ShareForm() {
     const router = useRouter();
@@ -18,8 +19,8 @@ export default function ShareForm() {
         content: '',
         writer: '',
         imgUrl: '/images/product_image.png',
-        category: 1,
-        createDate: '2021.4.21',
+        catego: null,
+        createDate: '',
     });
 
     const [userData, setUserData] = useState({
@@ -27,13 +28,13 @@ export default function ShareForm() {
         profileImg: '/images/temp_profile.png',
     });
 
-    const { title, content, writer, imgUrl, category, createDate } = postData;
+    const { title, content, writer, imgUrl, catego, createDate } = postData;
     const { postId } = infoData;
     const { profileImg } = userData;
 
     function loadPostData(currentId) {
         axios.get(`http://127.0.0.1:8020/api/v1/share/item/${currentId}`).then((res) => {
-            setPostData(res.data[0]);
+            setPostData({ ...res.data });
         });
     }
 
@@ -46,19 +47,19 @@ export default function ShareForm() {
     //     });
     // }
 
-    function getDate() {
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = today.getMonth() + 1;
-        const date = today.getDate();
-        const currentTime = `${year}.${month}.${date}`;
-        console.log(currentTime);
-        return currentTime;
-    }
+    // function getDate() {
+    //     const today = new Date();
+    //     const year = today.getFullYear();
+    //     const month = today.getMonth() + 1;
+    //     const date = today.getDate();
+    //     const currentTime = `${year}.${month}.${date}`;
+    //     console.log(currentTime);
+    //     return currentTime;
+    // }
 
     useEffect(() => {
-        const currentTime = getDate();
-        setPostData({ createDate: currentTime });
+        // const currentTime = getDate();
+        // setPostData({ createDate: currentTime });
         if (type === 'modify') {
             loadPostData(postId);
             // loadUserData(postId);
@@ -77,13 +78,17 @@ export default function ShareForm() {
 
     const modifyPost = async (event) => {
         event.preventDefault();
+        AuthService.setupAxiosInterceptors();
         axios
-            .post(
+            // .post(
+            .put(
                 `http://127.0.0.1:8020/api/v1/share/item/${postId}`,
                 {
                     title,
                     content,
-                    category: Number(category),
+                    catego: Number(catego),
+                    writer,
+                    state: 1,
                 },
                 {
                     headers: {
@@ -94,7 +99,7 @@ export default function ShareForm() {
             )
             .then((response) => {
                 console.log(response.data);
-                router.replace('/share');
+                router.replace(`/share?id=${postId}`);
             });
         // .catch((error) => {
         //     console.log('Error!');
@@ -109,9 +114,9 @@ export default function ShareForm() {
                 {
                     title,
                     content,
-                    category: Number(category),
+                    catego: Number(catego),
                     writer,
-                    createDate,
+                    state: 1,
                 },
                 {
                     headers: {
@@ -122,7 +127,7 @@ export default function ShareForm() {
             )
             .then((response) => {
                 console.log(response.data);
-                router.replace('/share');
+                router.replace(`/share?id=${postId}`);
             });
         // .catch((error) => {
         //     console.log('Error!');
@@ -173,7 +178,7 @@ export default function ShareForm() {
                                 id="category"
                                 name="category"
                                 onChange={handleChange}
-                                value={category}
+                                value={catego}
                                 style={{
                                     width: '180px',
                                     height: '52px',

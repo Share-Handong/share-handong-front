@@ -5,7 +5,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Link from 'next/link';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ShareCard from './components/ShareCard';
 
 // const sharePosts = [
@@ -58,17 +58,35 @@ export default function Main() {
     const classes = useStyles();
     const [sharePosts, setSharePosts] = useState([]);
 
-    const getShareList = () => {
+    // 기존 코드대로하면 get요청 무한반복 되어서 useEffect 사용해야되더라구요 :)
+
+    // const getShareList = () => {
+    //     try {
+    //         axios.get('http://127.0.0.1:8020/api/v1/myshare/item').then((res) => {
+    //             setSharePosts(res.data);
+    //         });
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // };
+
+    // getShareList.then((res) => {
+    //     setSharePosts(res.data);
+    // });
+
+    function getShareList() {
         try {
-            axios.get('http://127.0.0.1:8020/api/v1/myshare/item');
+            axios.get('http://127.0.0.1:8020/api/v1/share/item').then((res) => {
+                setSharePosts(res.data);
+            });
         } catch (error) {
             console.error(error);
         }
-    };
+    }
 
-    getShareList.then((res) => {
-        setSharePosts(res.data);
-    });
+    useEffect(() => {
+        getShareList();
+    }, []);
 
     return (
         <div>

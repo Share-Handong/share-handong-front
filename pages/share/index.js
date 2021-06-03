@@ -20,22 +20,23 @@ export default function Share() {
         content: '',
         writer: '',
         imgUrl: '/images/product_image.png',
-        category: 1,
-        createDate: '2021.4.21',
+        catego: null,
+        createdAt: '',
     });
+    // const [postData, setPostData] = useState([]);
 
     const [userData, setUserData] = useState({
         // name: '',
         profileImg: '/images/temp_profile.png',
     });
-    const { title, content, writer, imgUrl, category, createDate } = postData;
+    const { title, content, writer, imgUrl, catego, createDate } = postData;
 
     const { profileImg } = userData;
 
     function loadPostData(currentId) {
         axios.get(`http://127.0.0.1:8020/api/v1/share/item/${currentId}`).then((res) => {
-            setPostData(res.data[0]);
-            console.log(res.data[0]);
+            setPostData({ ...res.data });
+            console.log(postData);
         });
     }
 
@@ -48,19 +49,19 @@ export default function Share() {
     //     });
     // }
 
-    function getDate() {
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = today.getMonth() + 1;
-        const date = today.getDate();
-        const currentTime = `${year}.${month}.${date}`;
-        console.log(currentTime);
-        return currentTime;
-    }
+    // function getDate() {
+    //     const today = new Date();
+    //     const year = today.getFullYear();
+    //     const month = today.getMonth() + 1;
+    //     const date = today.getDate();
+    //     const currentTime = `${year}.${month}.${date}`;
+    //     console.log(currentTime);
+    //     return currentTime;
+    // }
 
     useEffect(() => {
-        const currentTime = getDate();
-        setPostData({ createDate: currentTime });
+        // const currentTime = getDate();
+        // setPostData({ createDate: currentTime });
         loadPostData(postId);
         // loadUserData(postId);
         console.log(AuthService.getLoggedInUserId);
@@ -98,7 +99,7 @@ export default function Share() {
                             marginBottom: '20px',
                         }}
                     >
-                        {category === 1 ? '나눔받기' : '나눔하기'}
+                        {catego === 1 ? '나눔받기' : '나눔하기'}
                     </div>
                     <div className="title " style={{ fontSize: '45px' }}>
                         <p>{title}</p>
