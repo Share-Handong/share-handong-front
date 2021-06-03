@@ -287,7 +287,7 @@ export default function Share() {
                     <span style={{ color: '#1A1818', paddingRight: '8px' }}>댓글</span>
                     <span style={{ color: '#FF4B4B' }}>1</span>
                 </div>
-                <CommentFormWrap />
+                <CommentFormWrap itemId={postId} />
                 <CommentBox />
                 <Divider />
             </div>
