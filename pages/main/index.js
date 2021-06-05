@@ -6,7 +6,7 @@ import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/sty
 import Link from 'next/link';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import ShareCard from './components/ShareCard';
+import ShareCard from '../../src/component/Common/ShareCard';
 import AuthService from '../../src/component/Common/AuthService';
 
 // const sharePosts = [

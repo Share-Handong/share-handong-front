@@ -5,7 +5,10 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
-        "start": "next start"
+        "start": "next start",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build",
+        "homepage": "http://ShareHandong.github.io"
     },
     "dependencies": {
         "@material-ui/core": "^4.11.4",
@@ -37,6 +40,7 @@
         "eslint-plugin-prettier": "^3.4.0",
         "eslint-plugin-react": "^7.23.2",
         "eslint-plugin-react-hooks": "^4.2.0",
+        "gh-pages": "^3.2.0",
         "prettier": "^2.3.0"
     }
 }
