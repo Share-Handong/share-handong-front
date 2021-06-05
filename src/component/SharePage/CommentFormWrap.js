@@ -25,7 +25,8 @@ export default function CommentFormWrap(props) {
 
         axios
             .post(
-                `http://127.0.0.1:8020/api/v1/comment/item/${itemId}?userName=${userInfo.name}`,
+                // `http://127.0.0.1:8020/api/v1/comment/item/${itemId}?userName=${userInfo.name}`,
+                `https://sharehandong-api-server.herokuapp.com/api/v1/comment/item/${itemId}?userName=${userInfo.name}`,
                 {
                     comment: event.target.comment.value,
                 },

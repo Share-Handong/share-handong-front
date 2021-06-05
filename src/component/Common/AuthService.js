@@ -2,7 +2,8 @@ import axios from 'axios';
 
 class AuthService {
     executeJwtAuthenticationService = (email, pw, name) => {
-        return axios.post('http://127.0.0.1:8020/api/v1/user/signup', {
+        // return axios.post('http://127.0.0.1:8020/api/v1/user/signup', {
+        return axios.post('https://sharehandong-api-server.herokuapp.com/api/v1/user/signup', {
             email,
             pw,
             name,
@@ -12,7 +13,8 @@ class AuthService {
     executeJwtAuthLogin = (reEmail, rePw, reName) => {
         if (reEmail) {
             axios
-                .post('http://127.0.0.1:8020/api/v1/user/login', {
+                // .post('http://127.0.0.1:8020/api/v1/user/login', {
+                .post('https://sharehandong-api-server.herokuapp.com/api/v1/user/login', {
                     email: reEmail,
                     pw: rePw,
                     name: reName,
@@ -38,7 +40,8 @@ class AuthService {
 
     executeHelloService = () => {
         console.log('===executeHelloService===');
-        return axios.get('http://127.0.0.1:8020/hello');
+        // return axios.get('http://127.0.0.1:8020/hello');
+        return axios.get('https://sharehandong-api-server.herokuapp.com/hello');
     };
 
     registerSuccessfulLoginForJwt = (email, token, pw, name) => {
@@ -102,7 +105,8 @@ class AuthService {
         if (token) {
             this.setupAxiosInterceptors();
             isLogin = axios
-                .post('http://127.0.0.1:8020/api/v1/user/login/check', {})
+                // .post('http://127.0.0.1:8020/api/v1/user/login/check', {})
+                .post('https://sharehandong-api-server.herokuapp.com/api/v1/user/login/check', {})
                 .then((res) => {
                     console.log(res);
                     //   if (res.data.login === true) return true;

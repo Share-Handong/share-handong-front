@@ -78,9 +78,12 @@ export default function Main() {
     function getShareList() {
         try {
             AuthService.setupAxiosInterceptors();
-            axios.get('http://127.0.0.1:8020/api/v1/share/item').then((res) => {
-                setSharePosts(res.data);
-            });
+            // axios.get('http://127.0.0.1:8020/api/v1/share/item').then((res) => {
+            axios
+                .get('https://sharehandong-api-server.herokuapp.com/api/v1/share/item')
+                .then((res) => {
+                    setSharePosts(res.data);
+                });
         } catch (error) {
             console.error(error);
         }

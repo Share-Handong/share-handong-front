@@ -33,9 +33,12 @@ export default function ShareForm() {
     const { profileImg } = userData;
 
     function loadPostData(currentId) {
-        axios.get(`http://127.0.0.1:8020/api/v1/share/item/${currentId}`).then((res) => {
-            setPostData({ ...res.data });
-        });
+        // axios.get(`http://127.0.0.1:8020/api/v1/share/item/${currentId}`).then((res) => {
+        axios
+            .get(`https://sharehandong-api-server.herokuapp.com/api/v1/share/item/${currentId}`)
+            .then((res) => {
+                setPostData({ ...res.data });
+            });
     }
 
     // function loadUserData(currentId) {
@@ -84,7 +87,8 @@ export default function ShareForm() {
         axios
             // .post(
             .put(
-                `http://127.0.0.1:8020/api/v1/share/item/${postId}`,
+                // `http://127.0.0.1:8020/api/v1/share/item/${postId}`,
+                `https://sharehandong-api-server.herokuapp.com/api/v1/share/item/${postId}`,
                 {
                     title,
                     content,
@@ -114,7 +118,8 @@ export default function ShareForm() {
         const userInfo = AuthService.getLoggedInUserInfo();
         axios
             .post(
-                `http://127.0.0.1:8020/api/v1/share/item?userName=${userInfo.name}`,
+                // `http://127.0.0.1:8020/api/v1/share/item?userName=${userInfo.name}`,
+                `https://sharehandong-api-server.herokuapp.com/api/v1/share/item?userName=${userInfo.name}`,
                 {
                     title,
                     content,

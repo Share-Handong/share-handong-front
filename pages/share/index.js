@@ -39,21 +39,25 @@ function Share() {
     const { profileImg } = userData;
 
     function loadPostData(currentId) {
-        axios.get(`http://127.0.0.1:8020/api/v1/share/item/${currentId}`).then((res) => {
-            const createdArray = res.data.createdAt.split('T');
-            const date = createdArray[0].split('-');
-            const time = createdArray[1].split(':');
-            res.data.createDate = `${date[1]}월 ${date[2]}일 ${time[0]}:${time[1]}`;
+        // axios.get(`http://127.0.0.1:8020/api/v1/share/item/${currentId}`).then((res) => {
+        axios
+            .get(`https://sharehandong-api-server.herokuapp.com/api/v1/share/item/${currentId}`)
+            .then((res) => {
+                const createdArray = res.data.createdAt.split('T');
+                const date = createdArray[0].split('-');
+                const time = createdArray[1].split(':');
+                res.data.createDate = `${date[1]}월 ${date[2]}일 ${time[0]}:${time[1]}`;
 
-            setPostData({ ...res.data });
-            console.log(res.data);
-        });
+                setPostData({ ...res.data });
+                console.log(res.data);
+            });
     }
 
     function deletePostData(event, currentId) {
         event.preventDefault();
         axios
-            .delete(`http://127.0.0.1:8020/api/v1/share/item/${currentId}`)
+            // .delete(`http://127.0.0.1:8020/api/v1/share/item/${currentId}`)
+            .delete(`https://sharehandong-api-server.herokuapp.com/api/v1/share/item/${currentId}`)
             .then(function (response) {
                 console.log(response);
                 router.replace('/main');

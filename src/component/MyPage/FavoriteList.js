@@ -101,7 +101,10 @@ export default function FavoriteList({ userInfo }) {
 
         try {
             axios
-                .get(`http://127.0.0.1:8020/api/v1/share/myitem?userName=${userInfo.name}`)
+                // .get(`http://127.0.0.1:8020/api/v1/share/myitem?userName=${userInfo.name}`)
+                .get(
+                    `https://sharehandong-api-server.herokuapp.com/api/v1/share/myitem?userName=${userInfo.name}`,
+                )
                 .then((res) => {
                     setFavoritePosts(res.data);
                 });
