@@ -19,7 +19,7 @@ export default function ShareForm() {
         content: '',
         writer: '',
         imgUrl: '/images/product_image.png',
-        catego: null,
+        catego: 1,
         createDate: '',
     });
 
@@ -28,7 +28,7 @@ export default function ShareForm() {
         profileImg: '/images/temp_profile.png',
     });
 
-    const { title, content, writer, imgUrl, catego, createDate } = postData;
+    const { title, content, writer, imgUrl, catego, createDate, userName } = postData;
     const { postId } = infoData;
     const { profileImg } = userData;
 
@@ -69,6 +69,8 @@ export default function ShareForm() {
     function handleChange(event) {
         const targetName = event.target.name; // 우선 e.target 에서 name 과 value 를 추출
         const targetValue = event.target.value;
+        console.log(targetName);
+        console.log(targetValue);
         const nextInputs = {
             ...postData, // 기존의 input 객체를 복사한 뒤
             [targetName]: targetValue, // name 키를 가진 값을 value 로 설정
@@ -108,9 +110,11 @@ export default function ShareForm() {
 
     const createPost = async (event) => {
         event.preventDefault();
+        AuthService.setupAxiosInterceptors();
+        const userInfo = AuthService.getLoggedInUserInfo();
         axios
             .post(
-                'http://127.0.0.1:8020/api/v1/share/item',
+                `http://127.0.0.1:8020/api/v1/share/item?userName=${userInfo.name}`,
                 {
                     title,
                     content,
@@ -127,7 +131,7 @@ export default function ShareForm() {
             )
             .then((response) => {
                 console.log(response.data);
-                router.replace(`/share?id=${postId}`);
+                router.replace(`/main`);
             });
         // .catch((error) => {
         //     console.log('Error!');
@@ -144,24 +148,36 @@ export default function ShareForm() {
                 <div
                     className="section-top"
                     style={{
-                        display: 'inline-flex',
+                        display: 'flex',
+                        marginLeft: '20px',
                     }}
                 >
-                    <div className="wrapper">
+                    <div
+                        style={{
+                            width: '200px',
+                            padding: '50px',
+                            boxShadow: '1px 1px 2px grey',
+                            border: '1px solid DCDCDC',
+                        }}
+                        className="wrapper"
+                    >
                         <img
                             className="img-form"
-                            src="{imgUrl}"
+                            src="/images/share_item.png"
                             alt="logo"
                             style={{
                                 backgroundColor: 'white',
-                                height: '416px',
-                                width: '404px',
-                                boxShadow: '1px 1px 2px grey',
-                                border: '1px solid DCDCDC',
+                                height: '100px',
+                                width: '100px',
+                                // boxShadow: '1px 1px 2px grey',
+                                // border: '1px solid DCDCDC',
                             }}
                         />
                     </div>
-                    <div className="wrapper" style={{ paddingLeft: '80px' }}>
+                    <div
+                        className="wrapper"
+                        style={{ width: '70%', paddingLeft: '40px', paddingTop: '10px' }}
+                    >
                         <div
                             className="category-form"
                             style={{
@@ -169,28 +185,28 @@ export default function ShareForm() {
                                     "url('/images/selection_arrow.png') no-repeat 97% 50%/25px auto",
                                 border: '1px solid #606060',
                                 borderRadius: '10px',
-                                width: '180px',
-                                height: '52px',
-                                marginBottom: '20px',
+                                width: '120px',
+                                height: '35px',
+                                marginBottom: '10px',
                             }}
                         >
                             <select
-                                id="category"
-                                name="category"
+                                id="catego"
+                                name="catego"
                                 onChange={handleChange}
                                 value={catego}
                                 style={{
-                                    width: '180px',
-                                    height: '52px',
+                                    width: '120px',
+                                    height: '35px',
                                     background: 'transparent',
                                     border: 'none',
-                                    fontSize: '23px',
+                                    fontSize: '1.2rem',
                                     color: '#F85757',
                                     borderRadius: '10px',
                                     textAlign: 'center',
                                     appearance: 'none',
                                     boxSizing: 'border-box',
-                                    paddingLeft: '28px',
+                                    paddingLeft: '15px',
                                 }}
                             >
                                 <option selected value="1">
@@ -206,11 +222,12 @@ export default function ShareForm() {
                                 type="text"
                                 onChange={handleChange}
                                 value={title}
+                                placeholder="제목을 입력하세요~"
                                 style={{
                                     backgroundColor: 'white',
-                                    height: '92px',
-                                    width: '644px',
-                                    fontSize: '45px',
+                                    height: '40px',
+                                    width: '90%',
+                                    fontSize: '1.5rem',
                                     zIndex: 1,
                                 }}
                             />
@@ -218,32 +235,36 @@ export default function ShareForm() {
                         <div
                             className="wrapper"
                             style={{
-                                paddingTop: '40px',
+                                paddingTop: '15px',
                                 display: 'inline-flex',
                                 flexDirection: 'row',
                                 alignItems: 'center',
-                                objectFit: 'contain',
                             }}
                         >
-                            <img
-                                className="profile-img"
-                                style={{
-                                    width: 50,
-                                    height: 50,
-                                    borderRadius: '50%',
-                                    marginRight: '18px',
-                                }}
-                                src={profileImg}
-                                alt="logo"
-                            />
+                            {type === 'modify' ? (
+                                <img
+                                    className="profile-img"
+                                    style={{
+                                        width: '25px',
+                                        height: '25px',
+                                        borderRadius: '50%',
+                                        marginRight: '18px',
+                                    }}
+                                    src={profileImg}
+                                    alt="logo"
+                                />
+                            ) : (
+                                ''
+                            )}
+
                             <span
                                 className="profile-name"
                                 style={{
-                                    fontSize: '25px',
+                                    fontSize: '1.2rem',
                                     paddingRight: '36px',
                                 }}
                             >
-                                {writer}
+                                {userName}
                             </span>
                             <span
                                 className="post-date"
@@ -259,12 +280,14 @@ export default function ShareForm() {
                 </div>
                 <Divider />
                 <div className="section-main">
-                    <div className="wrapper" style={{ marginTop: '60px', paddingBottom: '34px' }}>
-                        <DescriptionIcon style={{ fontSize: 35 }} />
+                    <div className="wrapper" style={{ margin: '10px 20px' }}>
+                        <DescriptionIcon
+                            style={{ fontSize: '1.5rem', color: '#1A1818', paddingTop: '3px' }}
+                        />
                         <span
                             style={{
-                                fontSize: '35px',
-                                fontWeight: 'bold',
+                                fontSize: '1.5rem',
+                                fontWeight: '400',
                                 paddingLeft: '8px',
                                 color: '#1A1818',
                             }}
@@ -279,33 +302,52 @@ export default function ShareForm() {
                         value={content}
                         onChange={handleChange}
                         style={{
-                            backgroundColor: 'white',
-                            height: '482px',
-                            width: '1128px',
-                            zIndex: 1,
+                            margin: '0px 20px',
+                            fontSize: '1.2rem',
+                            color: 'black',
+                            height: '200px',
+                            width: '90%',
+                            borderRadius: '10px',
+                            border: '1px solid #1A1818',
+                            padding: '10px',
                         }}
+                        placeholder="내용을 입력하세요~"
                     />
                 </div>
                 <div
                     className="section-bottom"
                     style={{
-                        width: '1128px',
+                        // width: '1128px',
                         display: 'inline-flex',
                         flexFlow: 'row',
                         justifyContent: 'flex-end',
                         alignItems: 'center',
-                        marginTop: '56px',
+                        marginTop: '10px',
+                        marginLeft: '60%',
                     }}
                 >
-                    <Link href="/share" className="cancel-btn">
+                    <Link
+                        href={
+                            type === 'modify'
+                                ? {
+                                      pathname: '/share',
+                                      query: { id: postId },
+                                  }
+                                : {
+                                      pathname: '/main',
+                                  }
+                        }
+                        className="cancel-btn"
+                    >
                         <div
                             style={{
                                 backgroundColor: 'white',
                                 border: 'none',
-                                fontSize: '35px',
+                                fontSize: '1.2rem',
                                 color: '#7E7979',
                                 textDecoration: 'underline',
-                                paddingRight: '48px',
+                                paddingRight: '20px',
+                                cursor: 'pointer',
                             }}
                         >
                             취소하기
@@ -316,13 +358,16 @@ export default function ShareForm() {
                         type="submit"
                         style={{
                             backgroundColor: '#F85757',
-                            borderRadius: '25px',
-                            height: '63px',
-                            width: '273px',
-                            fontSize: '26px',
+                            borderRadius: '15px',
+                            height: '40px',
+                            lineHeight: '40px',
+                            width: '200px',
+                            fontSize: '1.2rem',
                             color: 'white',
                             border: 'none',
                             boxShadow: '2px 2px 2px #585858;',
+                            textAlign: 'center',
+                            cursor: 'pointer',
                         }}
                     >
                         글 등록하기

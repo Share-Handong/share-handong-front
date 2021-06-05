@@ -145,7 +145,7 @@ const ShareCard = React.memo(function MyCard({ cardInfo }) {
                             <Avatar className={styles.avatar} src={cardInfo.profileImage} />
                         </Item>
                         <Info position="middle" useStyles={useNewsInfoStyles}>
-                            <InfoTitle>{cardInfo.writer}</InfoTitle>
+                            <InfoTitle>{cardInfo.userName}</InfoTitle>
                             <InfoSubtitle>
                                 {`${date[1]}월 ${date[2]}일 ${time[0]}:${time[1]}`}
                             </InfoSubtitle>

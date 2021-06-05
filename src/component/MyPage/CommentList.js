@@ -15,7 +15,7 @@ export default function CommentList() {
                     paddingLeft: '40px',
                 }}
             >
-                후기
+                {/* 후기 */}
             </div>
         </div>
     );

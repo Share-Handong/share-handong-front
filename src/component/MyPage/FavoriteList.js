@@ -12,19 +12,21 @@ import GridListTile from '@material-ui/core/GridListTile';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import Box from '@material-ui/core/Box';
 import axios from 'axios';
+import Link from 'next/link';
 
 const useStyles = makeStyles({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
-        justifyContent: 'space-around',
-        overflow: 'hidden',
+        // justifyContent: 'space-around',
+        // overflow: 'hidden',
     },
     title: {
         paddingLeft: 40,
     },
     gridListTile: {
         maxWidth: 300,
+        // border: '1px solid #eee',
     },
     gridList: {
         flexWrap: 'nowrap',
@@ -32,6 +34,7 @@ const useStyles = makeStyles({
         transform: 'translateZ(0)',
         paddingLeft: 40,
         paddingRight: 40,
+        width: '90%',
     },
     media: {
         height: 140,
@@ -89,15 +92,19 @@ const buttonTheme = createMuiTheme({
     },
 });
 
-export default function FavoriteList() {
+export default function FavoriteList({ userInfo }) {
     const classes = useStyles();
     const [favoritePosts, setFavoritePosts] = useState([]);
 
     function getFavoriteList() {
+        console.log(userInfo.name);
+
         try {
-            axios.get('http://127.0.0.1:8020/api/v1/myshare/favorite').then((res) => {
-                setFavoritePosts(res.data);
-            });
+            axios
+                .get(`http://127.0.0.1:8020/api/v1/share/myitem?userName=${userInfo.name}`)
+                .then((res) => {
+                    setFavoritePosts(res.data);
+                });
         } catch (error) {
             console.error(error);
         }
@@ -109,31 +116,32 @@ export default function FavoriteList() {
 
     return (
         <div className={classes.root}>
-            <Box height={50} />
-            <Grid container justify="center" className={classes.title}>
-                <ThumbUpIcon fontSize="large" />
-                <Box width={10} />
-                <Typography gutterBottom variant="h4" component="h2">
-                    나눔목록
+            <Box height={30} />
+            <Grid container justify="left" className={classes.title}>
+                <ThumbUpIcon style={{ marginTop: '5px', fontSize: '1.3rem' }} />
+                <Box width={5} />
+                <Typography gutterBottom variant="h6" component="h2">
+                    My Share
                 </Typography>
             </Grid>
-            <Box height={50} />
+            <Box height={30} />
             <GridList
                 className={classes.gridList}
                 justify="flex-start"
-                spacing={20}
-                cellHeight="auto"
+                spacing={40}
+                cellHeight="200"
+                style={{ marginLeft: '30px' }}
             >
                 {favoritePosts.map((tile) => (
                     <GridListTile className={classes.gridListTile} key={tile}>
                         <Card>
-                            <CardActionArea>
+                            <CardActionArea style={{ height: '150px' }}>
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
                                         {tile.title}
                                     </Typography>
                                     <Typography gutterBottom variant="body1" component="h2">
-                                        {dateConverter(tile.created_date)}
+                                        {dateConverter(tile.createdAt)}
                                     </Typography>
                                     <Typography
                                         variant="body2"
@@ -148,7 +156,14 @@ export default function FavoriteList() {
                             <CardActions>
                                 <ThemeProvider theme={buttonTheme}>
                                     <Button size="big" color="secondary">
-                                        자세히 보기
+                                        <Link
+                                            href={{
+                                                pathname: '/share',
+                                                query: { id: tile.idx },
+                                            }}
+                                        >
+                                            <span>자세히 보기</span>
+                                        </Link>
                                     </Button>
                                 </ThemeProvider>
                             </CardActions>

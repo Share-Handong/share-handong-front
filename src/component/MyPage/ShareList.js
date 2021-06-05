@@ -89,73 +89,74 @@ const buttonTheme = createMuiTheme({
     },
 });
 
-export default function ShareList() {
-    const classes = useStyles();
-    const [mySharePosts, setMySharePosts] = useState([]);
+export default function ShareList({ userInfo }) {
+    // const classes = useStyles();
+    // const [mySharePosts, setMySharePosts] = useState([]);
 
-    function getShareList() {
-        try {
-            axios.get('http://127.0.0.1:8020/api/v1/myshare/item').then((res) => {
-                setMySharePosts(res.data);
-            });
-        } catch (error) {
-            console.error(error);
-        }
-    }
+    // function getShareList() {
+    //     try {
+    //         axios.get(`http://127.0.0.1:8020/api/v1/share/item/${userInfo.name}}`).then((res) => {
+    //             setMySharePosts(res.data);
+    //         });
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
 
-    useEffect(() => {
-        getShareList();
-    }, []);
+    // useEffect(() => {
+    //     getShareList();
+    // }, []);
 
     return (
-        <div className={classes.root}>
-            <Box height={50} />
-            <Grid container justify="center" className={classes.title}>
-                <LoyaltyIcon fontSize="large" />
-                <Box width={10} />
-                <Typography gutterBottom variant="h4" component="h2">
-                    찜 목록
-                </Typography>
-            </Grid>
-            <Box height={50} />
-            <GridList
-                className={classes.gridList}
-                justify="flex-start"
-                spacing={20}
-                cellHeight="auto"
-            >
-                {mySharePosts.map((tile) => (
-                    <GridListTile className={classes.gridListTile} key={tile}>
-                        <Card>
-                            <CardActionArea>
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        {tile.title}
-                                    </Typography>
-                                    <Typography gutterBottom variant="body1" component="h2">
-                                        {dateConverter(tile.created_date)}
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        color="textSecondary"
-                                        component="p"
-                                        className={classes.cardCotent}
-                                    >
-                                        {tile.content}
-                                    </Typography>
-                                </CardContent>
-                            </CardActionArea>
-                            <CardActions>
-                                <ThemeProvider theme={buttonTheme}>
-                                    <Button size="big" color="secondary">
-                                        자세히 보기
-                                    </Button>
-                                </ThemeProvider>
-                            </CardActions>
-                        </Card>
-                    </GridListTile>
-                ))}
-            </GridList>
-        </div>
+        // <div className={classes.root}>
+        //     <Box height={50} />
+        //     <Grid container justify="center" className={classes.title}>
+        //         <LoyaltyIcon fontSize="large" />
+        //         <Box width={10} />
+        //         <Typography gutterBottom variant="h4" component="h2">
+        //             찜 목록
+        //         </Typography>
+        //     </Grid>
+        //     <Box height={50} />
+        //     <GridList
+        //         className={classes.gridList}
+        //         justify="flex-start"
+        //         spacing={20}
+        //         cellHeight="auto"
+        //     >
+        //         {mySharePosts.map((tile) => (
+        //             <GridListTile className={classes.gridListTile} key={tile}>
+        //                 <Card>
+        //                     <CardActionArea>
+        //                         <CardContent>
+        //                             <Typography gutterBottom variant="h5" component="h2">
+        //                                 {tile.title}
+        //                             </Typography>
+        //                             <Typography gutterBottom variant="body1" component="h2">
+        //                                 {dateConverter(tile.created_date)}
+        //                             </Typography>
+        //                             <Typography
+        //                                 variant="body2"
+        //                                 color="textSecondary"
+        //                                 component="p"
+        //                                 className={classes.cardCotent}
+        //                             >
+        //                                 {tile.content}
+        //                             </Typography>
+        //                         </CardContent>
+        //                     </CardActionArea>
+        //                     <CardActions>
+        //                         <ThemeProvider theme={buttonTheme}>
+        //                             <Button size="big" color="secondary">
+        //                                 자세히 보기
+        //                             </Button>
+        //                         </ThemeProvider>
+        //                     </CardActions>
+        //                 </Card>
+        //             </GridListTile>
+        //         ))}
+        //     </GridList>
+        // </div>
+        <></>
     );
 }

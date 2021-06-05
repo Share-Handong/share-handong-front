@@ -7,6 +7,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ShareCard from './components/ShareCard';
+import AuthService from '../../src/component/Common/AuthService';
 
 // const sharePosts = [
 //     {
@@ -76,6 +77,7 @@ export default function Main() {
 
     function getShareList() {
         try {
+            AuthService.setupAxiosInterceptors();
             axios.get('http://127.0.0.1:8020/api/v1/share/item').then((res) => {
                 setSharePosts(res.data);
             });
@@ -90,30 +92,36 @@ export default function Main() {
 
     return (
         <div>
-            <Head>
-                <title>Home | shareHandong</title>
-            </Head>
-            <h1>메인</h1>
-            <Grid container justify="center" spacing={3}>
-                {sharePosts.map((e) => (
-                    <Grid key={e.idx} item>
-                        <ShareCard cardInfo={e} />
-                    </Grid>
-                ))}
-            </Grid>
+            <div
+                style={{
+                    margin: '50px 100px',
+                    minHeight: 'calc(100vh - 200px)',
+                }}
+            >
+                <Head>
+                    <title>Home | shareHandong</title>
+                </Head>
+                <Grid container justify="center" spacing={3}>
+                    {sharePosts.map((e) => (
+                        <Grid key={e.idx} item>
+                            <ShareCard cardInfo={e} />
+                        </Grid>
+                    ))}
+                </Grid>
 
-            <ThemeProvider theme={fabTheme}>
-                <Link
-                    href={{
-                        pathname: '/share-form',
-                        query: { type: 'create' },
-                    }}
-                >
-                    <Fab color="secondary" aria-label="add" className={classes.fab}>
-                        <EditIcon />
-                    </Fab>
-                </Link>
-            </ThemeProvider>
+                <ThemeProvider theme={fabTheme}>
+                    <Link
+                        href={{
+                            pathname: '/share-form',
+                            query: { type: 'create' },
+                        }}
+                    >
+                        <Fab color="secondary" aria-label="add" className={classes.fab}>
+                            <EditIcon />
+                        </Fab>
+                    </Link>
+                </ThemeProvider>
+            </div>
         </div>
     );
 }

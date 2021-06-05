@@ -12,7 +12,7 @@ export default function MyPageWrap() {
         <div
             style={{
                 textAlign: 'center',
-                width: '85%',
+                width: '60%',
                 backgroundColor: 'white',
                 margin: '50px auto',
             }}
@@ -24,8 +24,8 @@ export default function MyPageWrap() {
                     marginRight: '40px',
                 }}
             />
-            <ShareList />
-            <FavoriteList />
+            <ShareList userInfo={userInfo} />
+            <FavoriteList userInfo={userInfo} />
             <CommentList />
         </div>
     ) : (
