@@ -142,6 +142,7 @@ export default function Top() {
                         res.data.name,
                     );
                 }
+                alert('로그인 되었습니다~ 좋은 하루 되세요!');
                 handleClose();
             })
             .catch(() => {
@@ -193,12 +194,17 @@ export default function Top() {
                     <IconButton aria-label="user-login" size="medium" onClick={handleClickOpen}>
                         <PersonOutlinedIcon />
                     </IconButton>
-                    <Dialog className={classes.dialog} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                    <DialogContent>
+                    <Dialog
+                        className={classes.dialog}
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="form-dialog-title"
+                    >
+                        <DialogContent>
                             <Box height={40} />
                         </DialogContent>
                         <DialogTitle id="form-dialog-title">
-                            <img src="/images/sh_logo.png" width="300"/>
+                            <img src="/images/sh_logo.png" width="300" />
                         </DialogTitle>
                         <DialogContent>
                             <Typography gutterBottom variant="h4" component="h2" align="center">

@@ -130,8 +130,9 @@ class AuthService {
 
         const email = localStorage.getItem('authenticatedUser');
         const name = localStorage.getItem('authenticatedUserName');
+        const token = localStorage.getItem('token');
         if (email === null) return '';
-        return { email, name };
+        return { email, name, token };
     };
 }
 

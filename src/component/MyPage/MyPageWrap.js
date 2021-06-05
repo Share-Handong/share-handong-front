@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Divider } from 'semantic-ui-react';
 import AuthService from '../Common/AuthService';
 import CommentList from './CommentList';
@@ -6,9 +7,16 @@ import Profile from './Profile';
 import ShareList from './ShareList';
 
 export default function MyPageWrap() {
-    const isLogin = AuthService.isUserLoggedIn();
-    const userInfo = AuthService.getLoggedInUserInfo();
-    return isLogin ? (
+    // const isLogin = AuthService.isUserLoggedIn();
+    // const userInfo = AuthService.getLoggedInUserInfo();
+    const [userInfo, setUserInfo] = useState({
+        token: '',
+    });
+
+    useEffect(() => {
+        setUserInfo(AuthService.getLoggedInUserInfo());
+    }, []);
+    return userInfo.token !== undefined && userInfo.token !== '' ? (
         <div
             style={{
                 textAlign: 'center',
